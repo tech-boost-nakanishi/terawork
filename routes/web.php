@@ -18,3 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'corporate'], function() {
+    Route::get('/login', 'Auth\CorporateLoginController@showLoginForm')->name('corporate.login');
+    Route::post('/login', 'Auth\CorporateLoginController@login')->name('corporate.login.submit');
+    Route::get('/', 'CorporateController@index')->name('corporate.dashboard');
+});
