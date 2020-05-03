@@ -4,7 +4,11 @@
 @include('layouts.header')
 @include('layouts.sidebar')
 @section('content')
-<h2>求人一覧(XX件)<span class="d-none d-sm-block" style="font-size: 16px; font-weight: normal; display: block; text-align: right; margin-top: -20px;">全xx件中 xx件〜xx件を表示</span></h2>
+@if(session('logout'))
+    <div class="alert alert-info" role="alert" style="width: 100%;">{{ session('logout') }}</div>
+@endif
+
+<h2>求人一覧(XX件)<span class="d-none d-sm-block" style="font-size: 16px; font-weight: normal; display: block; text-align: right; margin-top: -20px;">xx件〜xx件を表示</span></h2>
 
 <div class="card-columns">
     @for($i=0;$i<6;$i++)

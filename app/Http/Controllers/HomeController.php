@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -24,5 +25,16 @@ class HomeController extends Controller
     public function index()
     {
         return redirect('/');
+    }
+
+    public function logout()
+    {
+        if(Auth::guard('user')->check()){
+            Auth::guard('user')->logout();
+        }else{
+            Auth::guard('corporate')->logout();
+        }
+
+        return redirect('/')->with('logout', 'ログアウトしました。');
     }
 }

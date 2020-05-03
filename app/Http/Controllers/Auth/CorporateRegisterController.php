@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Corporate;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
-class RegisterController extends Controller
+class CorporateRegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -22,6 +22,23 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+
+    public function showRegistrationForm()
+    {
+        return view('auth.corporate_register');
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
+    }
 
     /**
      * Where to redirect users after registration.
@@ -37,7 +54,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:user');
+        $this->middleware('guest:corporate');
     }
 
     /**
@@ -49,7 +66,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'corporate_name' => ['required', 'string', 'max:255'],
+            'contact_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -59,12 +77,13 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Corporate
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        return Corporate::create([
+            'corporate_name' => $data['corporate_name'],
+            'contact_name' => $data['contact_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

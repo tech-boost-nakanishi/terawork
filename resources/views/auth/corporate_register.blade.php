@@ -7,19 +7,33 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header text-center">応募者として新規登録</div>
+                <div class="card-header text-center">掲載者として新規登録</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('corporate.register.submit') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">お名前</label>
+                            <label for="corporate_name" class="col-md-4 col-form-label text-md-right">会社名</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input id="corporate_name" type="text" class="form-control @error('corporate_name') is-invalid @enderror" name="corporate_name" value="{{ old('corporate_name') }}" required autocomplete="corporate_name" autofocus>
 
-                                @error('name')
+                                @error('corporate_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="contact_name" class="col-md-4 col-form-label text-md-right">担当者名</label>
+
+                            <div class="col-md-6">
+                                <input id="contact_name" type="text" class="form-control @error('contact_name') is-invalid @enderror" name="corporate_name" value="{{ old('contact_name') }}" required autocomplete="contact_name" autofocus>
+
+                                @error('contact_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -73,8 +87,8 @@
                     </form>
                 </div>
             </div>
-            <p style="text-align: center;">アカウントをお持ちの方は<a href="{{ url('login') }}">こちら</a></p>
-            <h4 style="text-align: center; margin-top: 50px;">求人を掲載したい方は<a href="{{ url('corporate/login') }}">こちら</a></h4>
+            <p style="text-align: center;">アカウントをお持ちの方は<a href="{{ url('corporate/login') }}">こちら</a></p>
+            <h4 style="text-align: center; margin-top: 50px;">求人に応募したい方は<a href="{{ url('login') }}">こちら</a></h4>
         </div>
     </div>
 </div>

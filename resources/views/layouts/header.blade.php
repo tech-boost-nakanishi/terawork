@@ -6,12 +6,46 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url('login') }}" style="color: #fff; font-size: 16px;">ログイン</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url('register') }}" style="color: #fff; font-size: 16px;">新規登録</a>
-            </li>
+            @guest
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('login') }}" style="color: #fff; font-size: 16px;">ログイン</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('register') }}" style="color: #fff; font-size: 16px;">新規登録</a>
+                </li>
+            @else
+                @if(Auth::guard('corporate')->check())
+                    <li class="dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff; font-size: 16px;">
+                            {{ Auth::guard('corporate')->user()->contact_name }}さん <span class="caret"></span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="margin-top: 10px; font-size: 18px;">
+                            <a class="dropdown-item" href="#">
+                                マイページ
+                            </a>
+                            <a class="dropdown-item" href="{{ url('logout') }}">
+                                ログアウト
+                            </a>
+                        </div>
+                    </li>
+                @else
+                    <li class="dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff; font-size: 16px;">
+                            {{ Auth::guard('user')->user()->name }}さん <span class="caret"></span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="margin-top: 10px; font-size: 18px;">
+                            <a class="dropdown-item" href="#">
+                                マイページ
+                            </a>
+                            <a class="dropdown-item" href="{{ url('logout') }}">
+                                ログアウト
+                            </a>
+                        </div>
+                    </li>
+                @endif
+            @endguest
         </ul>
     </div>
 </nav>

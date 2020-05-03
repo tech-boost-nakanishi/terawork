@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">ログイン</div>
+                <div class="card-header text-center">応募者としてログイン</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -69,6 +69,8 @@
                     </form>
                 </div>
             </div>
+            <p style="text-align: center;">アカウントをお持ちでない方は<a href="{{ url('register') }}">こちら</a></p>
+            <h4 style="text-align: center; margin-top: 50px;">求人を掲載したい方は<a href="{{ url('corporate/login') }}">こちら</a></h4>
         </div>
     </div>
 </div>
