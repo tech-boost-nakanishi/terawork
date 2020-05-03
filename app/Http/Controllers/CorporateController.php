@@ -11,7 +11,7 @@ class CorporateController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('corporate:admin');
+        $this->middleware('auth:corporate');
     }
     /**
      * Show the application dashboard.
