@@ -26,15 +26,4 @@ class HomeController extends Controller
     {
         return redirect('/');
     }
-
-    public function logout()
-    {
-        if(Auth::guard('user')->check()){
-            Auth::guard('user')->logout();
-        }else{
-            Auth::guard('corporate')->logout();
-        }
-
-        return redirect('/')->with('logout', 'ログアウトしました。');
-    }
 }

@@ -24,7 +24,7 @@
                             <a class="dropdown-item" href="#">
                                 マイページ
                             </a>
-                            <a class="dropdown-item" href="{{ url('logout') }}">
+                            <a class="dropdown-item" href="{{ url('corporate/logout') }}">
                                 ログアウト
                             </a>
                         </div>

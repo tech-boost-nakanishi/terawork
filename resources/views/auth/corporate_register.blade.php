@@ -31,7 +31,7 @@
                             <label for="contact_name" class="col-md-4 col-form-label text-md-right">担当者名</label>
 
                             <div class="col-md-6">
-                                <input id="contact_name" type="text" class="form-control @error('contact_name') is-invalid @enderror" name="corporate_name" value="{{ old('contact_name') }}" required autocomplete="contact_name" autofocus>
+                                <input id="contact_name" type="text" class="form-control @error('contact_name') is-invalid @enderror" name="contact_name" value="{{ old('contact_name') }}" required autocomplete="contact_name" autofocus>
 
                                 @error('contact_name')
                                     <span class="invalid-feedback" role="alert">

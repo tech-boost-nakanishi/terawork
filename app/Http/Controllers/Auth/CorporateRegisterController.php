@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
+use Auth;
 
 class CorporateRegisterController extends Controller
 {
@@ -25,6 +28,7 @@ class CorporateRegisterController extends Controller
 
     public function showRegistrationForm()
     {
+    	Auth::guard('user')->logout();
         return view('auth.corporate_register');
     }
 
@@ -32,12 +36,16 @@ class CorporateRegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+        $corporate = new Corporate;
+        $corporate->corporate_name = $request->corporate_name;
+        $corporate->contact_name = $request->contact_name;
+        $corporate->email = $request->email;
+        $corporate->password = Hash::make($request->password);
+        $corporate->save();
 
-        $this->guard()->login($user);
+        Auth::guard('corporate')->login($corporate);
 
-        return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
+        return redirect('/corporate/dashboard')->with('register', '登録ありがとうございます。');
     }
 
     /**
@@ -45,7 +53,7 @@ class CorporateRegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    //protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -68,7 +76,7 @@ class CorporateRegisterController extends Controller
         return Validator::make($data, [
             'corporate_name' => ['required', 'string', 'max:255'],
             'contact_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:corporates'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }

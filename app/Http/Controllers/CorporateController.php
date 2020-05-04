@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Auth;
 
 class CorporateController extends Controller
 {
@@ -20,6 +21,12 @@ class CorporateController extends Controller
      */
     public function index()
     {
-        return view('corporate');
+        return view('recruit.dashboard');
+    }
+
+    public function logout()
+    {
+    	Auth::guard('corporate')->logout();
+    	return redirect('/')->with('logout', 'ログアウトしました。');
     }
 }

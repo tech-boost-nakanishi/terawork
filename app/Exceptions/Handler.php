@@ -62,20 +62,16 @@ class Handler extends ExceptionHandler
      * @param  \Illuminate\Auth\AuthenticationException  $exception
      * @return \Illuminate\Http\Response
      */
-    protected function unauthenticated($request, AuthenticationException $exception)
+    public function unauthenticated($request, AuthenticationException $exception)
     {
-        if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
+        if($request->expectsJson()){
+            return response()->json(['message' => $exception->getMessage()], 401);
         }
-        $guard = array_get($exception->guards(), 0);
-        switch ($guard) {
-          case 'corporate':
-            $login = 'corporate.login';
-            break;
-          default:
-            $login = 'login';
-            break;
+ 
+        if (in_array('corporate', $exception->guards())) {
+            return redirect()->guest(route('corporate.login'));
         }
-        return redirect()->guest(route($login));
+ 
+        return redirect()->guest(route('login'));
     }
 }

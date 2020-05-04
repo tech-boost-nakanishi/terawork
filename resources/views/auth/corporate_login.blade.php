@@ -10,7 +10,7 @@
                 <div class="card-header text-center">掲載者としてログイン</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('corporate.login.submit') }}">
                         @csrf
 
                         <div class="form-group row">
