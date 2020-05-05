@@ -26,6 +26,8 @@ Route::group(['prefix' => 'corporate'], function() {
 
 	Route::group(['middleware' => 'auth:corporate'], function() {
 		Route::get('/dashboard', 'CorporateController@index')->name('corporate.dashboard');
+		Route::get('/recruit/create', 'RecruitController@add');
+		Route::post('/recruit/create', 'RecruitController@create');
 		Route::get('/logout', 'CorporateController@logout');
 	});
 

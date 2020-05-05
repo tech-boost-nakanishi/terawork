@@ -30,7 +30,9 @@
                     @yield('sidebar')
 
                     <div class="content col-md-10">
-                        @yield('content')
+                        <div class="container">
+                            @yield('content')
+                        </div>
                     </div>
 
                     @yield('auth')

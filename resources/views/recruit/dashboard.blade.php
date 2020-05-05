@@ -13,5 +13,6 @@
 @endif
 
 <h2>掲載者マイページ</h2>
+
 @endsection
 @include('layouts.footer')

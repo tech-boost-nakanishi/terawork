@@ -28,5 +28,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('auth', function($status){
             return Auth::guard($status)->check();
         });
+
+        Blade::if('guest', function(){
+            return !Auth::guard('corporate')->check();
+        });
     }
 }
