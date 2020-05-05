@@ -1,0 +1,57 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #fff;
+}
+
+nav {
+	height: 60px;
+}
+
+.navbar-toggler{
+	border-color: rgba(255,255,255,1);
+}
+
+.navbar-toggler .navbar-toggler-icon {
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.content {
+	padding-left: 20px;
+}
+
+.content h2 {
+	border-bottom: 2px solid #000;
+}
+
+footer {
+	margin-top: 50px;
+	padding-top: 20px;
+	background-color: #555;
+	height: 200px;
+}
+
+footer ul li {
+	list-style-type: none;
+}
+
+footer ul li a {
+	text-decoration: none;
+	color: #fff;
+	font-size: 16px;
+}
+
+footer ul li a:hover {
+	text-decoration: none;
+	opacity: 0.7;
+	color: #fff;
+}
+
+footer span {
+	color: #fff;
+	font-size: 22px;
+	word-break: normal;
+	display: block;
+	text-align: center;
+	padding: 20px 0;
+}

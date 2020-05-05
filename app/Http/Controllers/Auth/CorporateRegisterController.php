@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Corporate;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Auth;
 
-class RegisterController extends Controller
+class CorporateRegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -25,16 +26,26 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    public function showRegistrationForm()
+    {
+    	Auth::guard('user')->logout();
+        return view('auth.corporate_register');
+    }
+
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+        $corporate = new Corporate;
+        $corporate->corporate_name = $request->corporate_name;
+        $corporate->contact_name = $request->contact_name;
+        $corporate->email = $request->email;
+        $corporate->password = Hash::make($request->password);
+        $corporate->save();
 
-        $this->guard('user')->login($user);
+        Auth::guard('corporate')->login($corporate);
 
-        return $this->registered($request, $user)
-                        ?: redirect('/dashboard')->with('register', '登録ありがとうございます。');
+        return redirect('/corporate/dashboard')->with('register', '登録ありがとうございます。');
     }
 
     /**
@@ -51,7 +62,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:user');
+        $this->middleware('guest:corporate');
     }
 
     /**
@@ -63,8 +74,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'corporate_name' => ['required', 'string', 'max:255'],
+            'contact_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:corporates'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -73,12 +85,13 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Corporate
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        return Corporate::create([
+            'corporate_name' => $data['corporate_name'],
+            'contact_name' => $data['contact_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
