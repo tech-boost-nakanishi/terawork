@@ -134,8 +134,11 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'pref_name' => [
+            'required' => ':attribute を選択してください',
+        ],
+        'languages' => [
+            'required' => ':attribute を選択してください',
         ],
     ],
 
@@ -154,6 +157,12 @@ return [
       |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'title' => 'タイトル',
+        'body' => '本文',
+        'languages' => '言語',
+        'monthly_income' => '月収',
+        'pref_name' => '都道府県',
+    ],
 
 ];

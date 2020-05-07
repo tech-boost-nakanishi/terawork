@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRecruitsTable extends Migration
+class CreateRecruitLanguagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateRecruitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('recruits', function (Blueprint $table) {
+        Schema::create('recruit_languages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('corporate_id');
-            $table->string('title');
-            $table->string('body', 1400);
-            $table->integer('monthly_income');
-            $table->string('pref_name');
-            $table->string('status')->default('募集中');
+            $table->integer('recruit_id');
+            $table->integer('language_id');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateRecruitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recruits');
+        Schema::dropIfExists('recruit_languages');
     }
 }
