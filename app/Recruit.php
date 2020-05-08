@@ -15,4 +15,9 @@ class Recruit extends Model
         'monthly_income' => 'required',
         'pref_name' => 'required',
     );
+
+    public function recruitlanguages() 
+    { 
+    	return $this->belongsToMany('App\Language', "recruit_languages"); 
+    }
 }

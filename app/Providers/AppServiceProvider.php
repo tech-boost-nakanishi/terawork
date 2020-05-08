@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Auth;
 use Blade;
+use View;
+use App\Language;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +33,13 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::if('guest', function(){
             return !Auth::guard('corporate')->check();
+        });
+
+        View::composer('*', function($view){
+            $languages = Language::all();
+            $view->with([
+                'languages' => $languages,
+            ]);
         });
     }
 }

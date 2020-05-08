@@ -13,13 +13,13 @@ class RecruitController extends Controller
 {
     public function top()
     {
-    	return view('top');
+    	$recruits = Recruit::orderby('created_at', 'desc')->paginate(12);
+    	return view('top', ['recruits' => $recruits]);
     }   
 
     public function add()
     {
-    	$languages = Language::all();
-    	return view('recruit.create', ['languages' => $languages]);
+    	return view('recruit.create');
     }
 
     public function create(Request $request)

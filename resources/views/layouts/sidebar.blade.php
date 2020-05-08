@@ -77,7 +77,14 @@
                     <td style="font-weight: bold;">言語</td>
                 </tr>
                 <tr>
-                    <td>5</td>
+                    <td>
+                        <select name="language" class="form-control">
+                            <option value="" selected>選択してください</option>
+                            @foreach($languages as $lang)
+                                <option value="{{ $lang->id }}">{{ $lang->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td style="font-weight: bold;">フリーワード</td>
