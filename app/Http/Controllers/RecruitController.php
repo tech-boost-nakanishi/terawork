@@ -47,4 +47,21 @@ class RecruitController extends Controller
 
     	return redirect('/corporate/recruit/create')->with('recruitcreate', '投稿が完了しました。');
     }
+
+    public function edit($id)
+    {
+    	$recruit = Recruit::findOrFail($id);
+    	if($recruit->corporate_id != Auth::guard('corporate')->user()->id){
+    		abort(404);
+    	}
+
+    	$langs = $recruit->recruitlanguages()->get();
+
+    	return view('recruit.edit', ['recruit' => $recruit , 'langs' => $langs]);
+    }
+
+    public function update()
+    {
+
+    }
 }

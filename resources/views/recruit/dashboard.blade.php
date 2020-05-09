@@ -14,5 +14,7 @@
 
 <h2>掲載者マイページ</h2>
 
+<a href="{{ route('recruit.edit', ['id' => 1]) }}">click me</a>
+
 @endsection
 @include('layouts.footer')

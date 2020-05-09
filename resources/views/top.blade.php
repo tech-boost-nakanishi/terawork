@@ -33,7 +33,7 @@
                         <th>言語</th>
                         <td style="width: 65%; word-wrap: break-word;">
                             @foreach($recruit->recruitlanguages as $reclang)
-                                <p>{{ $reclang->name }}</p>
+                                <a href="#" style="margin-right: 5px;">{{ $reclang->name }}</a>
                             @endforeach
                         </td>
                     </tr>

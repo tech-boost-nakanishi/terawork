@@ -101,7 +101,8 @@
         <label class="col-md-12" for="languages">言語</label>
         <div class="col-md-12">
         	@foreach($languages as $lang)
-            	<p style="width: 100px; float: left;"><input type="checkbox" class="form-control" name="languages[]" value="{{ $lang->id }}" multiple @if(is_array(old('languages')) && in_array($lang->id, old('languages'))) checked @endif></p><p style="margin-top: 8px; margin-left: -80px; margin-right: 10px; float: left;">{{ $lang->name }}</p>
+            	<input type="checkbox" class="form-control" name="languages[]" style="width: 25px; position: relative;" value="{{ $lang->id }}" multiple @if(is_array(old('languages')) && in_array($lang->id, old('languages'))) checked @endif>
+            	<span style="position: absolute; left: 50px; margin-top: -30px;">{{ $lang->name }}</span>
             @endforeach
         </div>
     </div>
