@@ -70,7 +70,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="number" class="form-control" name="keyword" value="" style="width: 65px; display: inline; margin: 0 5px;">万円以上
+                        <input type="number" class="form-control" name="keyword" value="" style="width: 45%; display: inline; margin: 0 5px;">万円以上
                     </td>
                 </tr>
                 <tr>

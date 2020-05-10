@@ -5,13 +5,13 @@
 @include('layouts.sidebar')
 
 @section('content')
-@if(session('recruitcreate'))
-    <div class="alert alert-success" role="alert" style="width: 100%;">{{ session('recruitcreate') }}</div>
+@if(session('recruitupdated'))
+    <div class="alert alert-success" role="alert" style="width: 100%;">{{ session('recruitupdated') }}</div>
 @endif
 
 <h2>求人編集画面</h2>
 
-<form action="" method="post" enctype="multipart/form-data">
+<form action="{{ action('RecruitController@update') }}" method="post" enctype="multipart/form-data">
 	<div class="form-group row">
 		@if($errors->has('title'))
 		　　<div class="alert alert-danger" role="alert" style="width: 100%;">{{ $errors->first('title') }}</div>
@@ -101,7 +101,7 @@
         <label class="col-md-12" for="languages">言語</label>
         <div class="col-md-12">
         	@foreach($languages as $lang)
-                	<input type="checkbox" class="form-control" name="languages[]" style="width: 25px; position: relative;" value="{{ $lang->id }}" multiple @foreach($langs as $reclang) @if($lang->id == $reclang->id) checked @endif @endforeach>
+                	<input type="checkbox" class="form-control" name="languages[]" style="width: 25px; position: relative;" value="{{ $lang->id }}" multiple @foreach($recruit->recruitlanguages as $reclang) @if($lang->id == $reclang->language_id) checked @endif @endforeach>
                 	<span style="position: absolute; left: 50px; margin-top: -30px;">{{ $lang->name }}</span>
             @endforeach
         </div>
@@ -116,8 +116,9 @@
             <textarea class="form-control" name="body" rows="15">{{ $recruit->body }}</textarea>
         </div>
     </div>
+    <input type="hidden" name="id" value="{{ $recruit->id }}">
     {{ csrf_field() }}
-    <input type="submit" value="投稿" class="btn btn-primary" style="display: block; width: 60px; margin: 20px auto;">
+    <input type="submit" value="更新" class="btn btn-primary" style="display: block; width: 60px; margin: 20px auto;">
 </form>
 @endsection
 

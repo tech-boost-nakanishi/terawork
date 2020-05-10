@@ -55,13 +55,36 @@ class RecruitController extends Controller
     		abort(404);
     	}
 
-    	$langs = $recruit->recruitlanguages()->get();
-
-    	return view('recruit.edit', ['recruit' => $recruit , 'langs' => $langs]);
+    	return view('recruit.edit', ['recruit' => $recruit]);
     }
 
-    public function update()
+    public function update(Request $request)
     {
+    	$this->validate($request, Recruit::$rules);
 
+    	$recruit = Recruit::find($request->id);
+    	$form = $request->all();
+
+    	$recruit->corporate_id = Auth::guard('corporate')->user()->id;
+    	$recruit->title = $request->title;
+    	$recruit->monthly_income = $request->monthly_income;
+    	$recruit->pref_name = $request->pref_name;
+    	$recruit->body = $request->body;
+    	$recruit->save();
+
+    	foreach ($recruit->recruitlanguages()->get() as $key => $value) {
+    		$value->delete();
+    	}
+
+    	foreach ($request->languages as $key => $value) {
+    		$reclang = new RecruitLanguage;
+    		$reclang->recruit_id = $recruit->id;
+    		$reclang->language_id = $value;
+    		$reclang->save();
+    	}
+
+    	unset($form['_token']);
+
+    	return redirect()->route('recruit.edit', ['id' => $request->id])->with('recruitupdated', '求人を更新しました。');
     }
 }

@@ -16,8 +16,13 @@ class Recruit extends Model
         'pref_name' => 'required',
     );
 
-    public function recruitlanguages() 
+    public function languages() 
     { 
     	return $this->belongsToMany('App\Language', "recruit_languages"); 
+    }
+
+    public function recruitlanguages() 
+    { 
+    	return $this->hasMany('App\RecruitLanguage'); 
     }
 }
