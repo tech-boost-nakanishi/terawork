@@ -21,7 +21,8 @@ class CorporateController extends Controller
      */
     public function index()
     {
-        return view('recruit.dashboard');
+    	$recruits = Auth::guard('corporate')->user()->recruits()->orderBy('created_at', 'desc')->get();
+        return view('recruit.dashboard', ['recruits' => $recruits]);
     }
 
     public function logout()

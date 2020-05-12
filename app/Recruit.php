@@ -25,4 +25,9 @@ class Recruit extends Model
     { 
     	return $this->hasMany('App\RecruitLanguage'); 
     }
+
+    public function corporate()
+    {
+    	return $this->belongsTo("App\Corporate");
+    }
 }

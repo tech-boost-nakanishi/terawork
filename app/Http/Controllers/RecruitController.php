@@ -70,6 +70,7 @@ class RecruitController extends Controller
     	$recruit->monthly_income = $request->monthly_income;
     	$recruit->pref_name = $request->pref_name;
     	$recruit->body = $request->body;
+    	$recruit->status = $request->status;
     	$recruit->save();
 
     	foreach ($recruit->recruitlanguages()->get() as $key => $value) {
