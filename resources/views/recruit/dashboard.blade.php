@@ -12,6 +12,10 @@
     <div class="alert alert-info" role="alert" style="width: 100%;">{{ session('login') }}</div>
 @endif
 
+@if(session('recruitdelete'))
+    <div class="alert alert-danger" role="alert" style="width: 100%;">{{ session('recruitdelete') }}</div>
+@endif
+
 <h2>掲載者マイページ</h2>
 
 <table class="table table-bordered" style="margin-top: 20px;">
@@ -31,12 +35,33 @@
                 <td>0人</td>
                 <td>
                     <a href="{{ route('recruit.edit', ['id' => $rec->id]) }}" class="btn btn-info">編集</a>
-                    <a href="#" class="btn btn-danger">削除</a>
+                    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ $rec->id }}">削除</a>
                 </td>
             </tr>
+
+            <div class="modal fade" id="deleteModal{{ $rec->id }}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">削除確認画面</h4>
+                        </div>
+                        <div class="modal-body">
+                            <label>「{{ $rec->title }}」を削除しますか？</label>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-default" data-dismiss="modal">閉じる</a>
+                            <a href="{{ action('RecruitController@delete', ['id' => $rec->id]) }}" class="btn btn-danger">削除</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endforeach
     </tbody>
 </table>
+
+<div class="d-flex justify-content-center">
+    {{ $recruits->appends(request()->input())->links() }}
+</div>
 
 @endsection
 @include('layouts.footer')

@@ -30,4 +30,15 @@ class Recruit extends Model
     {
     	return $this->belongsTo("App\Corporate");
     }
+
+    public static function boot()
+    {
+    	parent::boot();
+
+    	static::deleting(function($recruit){
+    		foreach ($recruit->recruitlanguages()->get() as $child) {
+    			$child->delete();
+    		}
+    	});
+    }
 }
