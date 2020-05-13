@@ -26,6 +26,7 @@ Route::group(['prefix' => 'corporate'], function() {
 		Route::post('/recruit/create', 'RecruitController@create');
 		Route::get('/recruit/edit/{id}', 'RecruitController@edit')->name('recruit.edit');
 		Route::post('/recruit/edit', 'RecruitController@update');
+		Route::get('/recruit/delete', 'RecruitController@delete');
 		Route::get('/logout', 'CorporateController@logout');
 	});
 

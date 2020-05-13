@@ -70,6 +70,7 @@ class RecruitController extends Controller
     	$recruit->monthly_income = $request->monthly_income;
     	$recruit->pref_name = $request->pref_name;
     	$recruit->body = $request->body;
+    	$recruit->status = $request->status;
     	$recruit->save();
 
     	foreach ($recruit->recruitlanguages()->get() as $key => $value) {
@@ -86,5 +87,13 @@ class RecruitController extends Controller
     	unset($form['_token']);
 
     	return redirect()->route('recruit.edit', ['id' => $request->id])->with('recruitupdated', '求人を更新しました。');
+    }
+
+    public function delete(Request $request)
+    {
+    	$recruit = Recruit::find($request->id);
+    	$recruit->delete();
+
+    	return redirect()->route('corporate.dashboard')->with('recruitdelete', '求人を削除しました。');
     }
 }

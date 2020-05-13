@@ -29,6 +29,10 @@ nav {
 	font-weight: bold;
 }
 
+.content hr {
+	border: 2px solid #dcdcdc;
+}
+
 footer {
 	margin-top: 50px;
 	padding-top: 20px;

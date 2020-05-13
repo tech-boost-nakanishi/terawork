@@ -37,4 +37,9 @@ class Corporate extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function recruits()
+    {
+    	return $this->hasMany("App\Recruit");
+    }
 }

@@ -25,4 +25,20 @@ class Recruit extends Model
     { 
     	return $this->hasMany('App\RecruitLanguage'); 
     }
+
+    public function corporate()
+    {
+    	return $this->belongsTo("App\Corporate");
+    }
+
+    public static function boot()
+    {
+    	parent::boot();
+
+    	static::deleting(function($recruit){
+    		foreach ($recruit->recruitlanguages()->get() as $child) {
+    			$child->delete();
+    		}
+    	});
+    }
 }

@@ -12,6 +12,19 @@
 <h2>求人編集画面</h2>
 
 <form action="{{ action('RecruitController@update') }}" method="post" enctype="multipart/form-data">
+    <div class="form-group row">
+        @if($errors->has('status'))
+        　　<div class="alert alert-danger" role="alert" style="width: 100%;">{{ $errors->first('status') }}</div>
+        @endif
+        <label class="col-md-12" for="status">ステータス</label>
+        <div class="col-md-12">
+            <select name=status class="form-control" style="width: 200px;">
+                <option value="募集中" @if($recruit->status == "募集中") selected @endif>募集中</option>
+                <option value="終了" @if($recruit->status == "終了") selected @endif>終了</option>
+            </select>
+        </div>
+    </div>
+    <hr>
 	<div class="form-group row">
 		@if($errors->has('title'))
 		　　<div class="alert alert-danger" role="alert" style="width: 100%;">{{ $errors->first('title') }}</div>
