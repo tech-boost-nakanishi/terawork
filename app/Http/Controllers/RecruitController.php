@@ -15,7 +15,13 @@ class RecruitController extends Controller
     {
     	$recruits = Recruit::orderby('created_at', 'desc')->paginate(12);
     	return view('top', ['recruits' => $recruits]);
-    }   
+    }
+
+    public function show($id)
+    {
+    	$recruit = Recruit::findOrFail($id);
+    	return view('recruit.index', ['recruit' => $recruit]);
+    } 
 
     public function add()
     {
@@ -92,8 +98,12 @@ class RecruitController extends Controller
     public function delete(Request $request)
     {
     	$recruit = Recruit::find($request->id);
-    	$recruit->delete();
 
-    	return redirect()->route('corporate.dashboard')->with('recruitdelete', '求人を削除しました。');
+    	if($recruit->corporate_id == Auth::guard('corporate')->user()->id){
+    		$recruit->delete();
+    		return redirect()->route('corporate.dashboard')->with('recruitdelete', '求人を削除しました。');
+    	}else{
+    		abort(404);
+    	}
     }
 }

@@ -1,0 +1,43 @@
+@extends('layouts.common')
+@section('title', $recruit->title . ' - ' . config('app.name'))
+
+@include('layouts.header')
+@include('layouts.sidebar')
+
+@section('content')
+@if(session('recruitcreate'))
+    <div class="alert alert-success" role="alert" style="width: 100%;">{{ session('recruitcreate') }}</div>
+@endif
+
+<h2 style="font-size: 26px;">{{ $recruit->title }}</h2>
+
+<table class="table table-bordered" style="margin: 30px 0;">
+    <tr>
+        <th class="bg-light" style="min-width: 100px;">都道府県</th>
+        <td>{{ $recruit->pref_name }}</td>
+    </tr>
+    <tr>
+        <th class="bg-light">月収</th>
+        <td>約{{ $recruit->monthly_income }}万円以上</td>
+    </tr>
+    <tr>
+        <th class="bg-light">言語</th>
+        <td>
+            @foreach($recruit->languages as $reclang)
+                <a href="#" style="margin-right: 5px;">{{ $reclang->name }}</a>
+            @endforeach
+        </td>
+    </tr>
+</table>
+
+<h4 style="font-weight: bold; margin-bottom: 10px;">本文</h4>
+<p style="font-size: 16px;">{{ $recruit->body }}</p>
+
+<div style="width: 320px; display: flex; justify-content: space-between; margin: 0 auto; margin-top: 50px;">
+    <a href="#" class="btn btn-info btn-lg @if(!Auth::guard('user')->user()) disabled @endif" style="color: #fff;">お気に入りに追加</a>
+    <a href="#" class="btn btn-lg btn-primary @if(!Auth::guard('user')->user()) disabled @endif">応募する</a>
+</div>
+
+@endsection
+
+@include('layouts.footer')

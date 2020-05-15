@@ -30,7 +30,7 @@
         @foreach($recruits as $rec)
             <tr>
                 <td>{{ $rec->created_at->format('Y年m月d日 H:i') }}</td>
-                <td>{{ $rec->title }}</td>
+                <td><a href="{{ action('RecruitController@show', ['id' => $rec->id]) }}">{{ $rec->title }}</a></td>
                 <td>{{ $rec->status }}</td>
                 <td>0人</td>
                 <td>

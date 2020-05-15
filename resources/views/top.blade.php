@@ -39,7 +39,7 @@
                     </tr>
                 </table>
             </div>
-            <a class="btn" href="#" style="display: block; margin: 10px auto; margin-top: -10px; width: 100px; background-color: #FFBF00;">詳細を見る</a>
+            <a class="btn" href="{{ action('RecruitController@show', ['id' => $recruit->id]) }}" style="display: block; margin: 10px auto; margin-top: -10px; width: 100px; background-color: #FFBF00;">詳細を見る</a>
         </div>
     @endforeach
 </div>
