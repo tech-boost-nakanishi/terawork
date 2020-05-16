@@ -9,6 +9,14 @@
     <div class="alert alert-success" role="alert" style="width: 100%;">{{ session('recruitcreate') }}</div>
 @endif
 
+@if(session('favadded'))
+    <div class="alert alert-success" role="alert" style="width: 100%;">{{ session('favadded') }}</div>
+@endif
+
+@if(session('favexists'))
+    <div class="alert alert-danger" role="alert" style="width: 100%;">{{ session('favexists') }}</div>
+@endif
+
 <h2 style="font-size: 26px;">{{ $recruit->title }}</h2>
 
 <table class="table table-bordered" style="margin: 30px 0;">
@@ -34,7 +42,7 @@
 <p style="font-size: 16px;">{{ $recruit->body }}</p>
 
 <div style="width: 320px; display: flex; justify-content: space-between; margin: 0 auto; margin-top: 50px;">
-    <a href="#" class="btn btn-info btn-lg @if(!Auth::guard('user')->user()) disabled @endif" style="color: #fff;">お気に入りに追加</a>
+    <a href="{{ action('ApplyController@favorite', ['id' => $recruit->id]) }}" class="btn btn-info btn-lg @if(!Auth::guard('user')->user()) disabled @endif" style="color: #fff;">お気に入りに追加</a>
     <a href="#" class="btn btn-lg btn-primary @if(!Auth::guard('user')->user()) disabled @endif">応募する</a>
 </div>
 
