@@ -30,6 +30,10 @@ Route::group(['prefix' => 'corporate'], function() {
 		Route::get('/logout', 'CorporateController@logout');
 	});
 
+	Route::group(['middleware' => 'auth:user'], function() {
+		Route::get('/recruit/favorite/{id}', 'ApplyController@favorite');
+	});
+
 	Route::get('/login', 'Auth\CorporateLoginController@showLoginForm')->name('corporate.login');
     Route::post('/login', 'Auth\CorporateLoginController@login')->name('corporate.login.submit');
     Route::get('/register', 'Auth\CorporateRegisterController@showRegistrationForm')->name('corporate.register');

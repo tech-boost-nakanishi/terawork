@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Blade::if('guest', function(){
-            return !Auth::guard('corporate')->check();
+            return !Auth::guard('corporate')->check() && !Auth::guard('user')->check();
         });
 
         View::composer('*', function($view){
