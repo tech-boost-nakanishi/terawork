@@ -34,4 +34,10 @@ class ApplyController extends Controller
     		return redirect()->action('RecruitController@show', ['id' => $id])->with('favexists', 'お気に入りに登録済みです。');
     	}
     }
+
+    public function pre_apply($id)
+    {
+    	$recid = $id;
+    	return view('apply.pre_apply', ['recid' => $recid]);
+    }
 }
