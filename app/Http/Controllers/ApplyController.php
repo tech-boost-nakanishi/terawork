@@ -40,4 +40,9 @@ class ApplyController extends Controller
     	$recid = $id;
     	return view('apply.pre_apply', ['recid' => $recid]);
     }
+
+    public function apply($id)
+    {
+    	return '応募が完了しました。';
+    }
 }

@@ -33,6 +33,7 @@ Route::group(['prefix' => 'corporate'], function() {
 	Route::group(['middleware' => 'auth:user'], function() {
 		Route::get('/recruit/favorite/{id}', 'ApplyController@favorite');
 		Route::get('/recruit/apply/{id}', 'ApplyController@pre_apply');
+		Route::post('/recruit/apply/{id}', 'ApplyController@apply');
 	});
 
 	Route::get('/login', 'Auth\CorporateLoginController@showLoginForm')->name('corporate.login');
