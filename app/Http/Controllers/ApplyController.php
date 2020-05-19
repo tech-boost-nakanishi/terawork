@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 
 use App\Favorite;
+use App\Apply;
 
 class ApplyController extends Controller
 {
@@ -41,8 +42,16 @@ class ApplyController extends Controller
     	return view('apply.pre_apply', ['recid' => $recid]);
     }
 
-    public function apply($id)
+    public function apply($id, Request $request)
     {
-    	return '応募が完了しました。';
+    	$this->validate($request, Apply::$rules);
+
+    	$applyuser = Apply::where('user_id', Auth::guard('user')->user()->id)->where('recruit_id', $id)->first();
+
+    	if($applyuser === null){
+
+    	}else{
+    		return view('apply.pre_apply')->with('applied', '応募済みです。');
+    	}
     }
 }

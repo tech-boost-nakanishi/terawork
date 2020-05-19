@@ -4,10 +4,13 @@
 @include('layouts.header')
 @include('layouts.sidebar')
 @section('content')
+@if(session('applied'))
+    <div class="alert alert-danger" role="alert" style="width: 100%;">{{ session('applied') }}</div>
+@endif
 
 <h2>求人応募申請画面</h2>
 
-<form action="{{ action('Applycontroller@apply', ['id' => $recid]) }}" method="post" enctype="multipart/form-data">
+<form action="{{ action('ApplyController@apply', ['id' => $recid]) }}" method="post" enctype="multipart/form-data">
 	<div class="form-group row">
 		@if($errors->has('username'))
 		　　<div class="alert alert-danger" role="alert" style="width: 100%;">{{ $errors->first('username') }}</div>
@@ -29,69 +32,32 @@
     </div>
     <hr>
     <div class="form-group row">
-		@if($errors->has('phonetic'))
-		　　<div class="alert alert-danger" role="alert" style="width: 100%;">{{ $errors->first('phonetic') }}</div>
+    	@if($errors->has('birth_yaer') || $errors->has('birth_month') || $errors->has('birth_day'))
+		　　<div class="alert alert-danger" role="alert" style="width: 100%;">生年月日を選択してください</div>
 		@endif
         <label class="col-md-12" for="phonetic">生年月日</label>
         <div class="col-md-3">
             <select name="birth_year" class="form-control">
-            	<option value="">年</option>
+            	<option value="" @if(old('birth_year') == "") selected @endif>年</option>
             	@for($i=1900; $i<=date('Y'); $i++)
-            		<option value="{{ $i }}">{{ $i }}</option>
+            		<option value="{{ $i }}" @if(old('birth_year') == $i) selected @endif>{{ $i }}</option>
             	@endfor
             </select>
         </div>
         <div class="col-md-3">
             <select name="birth_month" class="form-control">
-				<option value="">月</option>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-				<option value="11">11</option>
-				<option value="12">12</option>
+				<option value="" @if(old('birth_month') == "") selected @endif>月</option>
+				@for($i=1; $i<=12; $i++)
+            		<option value="{{ $i }}" @if(old('birth_month') == $i) selected @endif>{{ $i }}</option>
+            	@endfor
 			</select>
         </div>
         <div class="col-md-3">
             <select name="birth_day" class="form-control">
-				<option value="">日</option>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-				<option value="11">11</option>
-				<option value="12">12</option>
-				<option value="13">13</option>
-				<option value="14">14</option>
-				<option value="15">15</option>
-				<option value="16">16</option>
-				<option value="17">17</option>
-				<option value="18">18</option>
-				<option value="19">19</option>
-				<option value="20">20</option>
-				<option value="21">21</option>
-				<option value="22">22</option>
-				<option value="23">23</option>
-				<option value="24">24</option>
-				<option value="25">25</option>
-				<option value="26">26</option>
-				<option value="27">27</option>
-				<option value="28">28</option>
-				<option value="29">29</option>
-				<option value="30">30</option>
-				<option value="31">31</option>
+				<option value="" @if(old('birth_day') == "") selected @endif>日</option>
+				@for($i=1; $i<=31; $i++)
+            		<option value="{{ $i }}" @if(old('birth_day') == $i) selected @endif>{{ $i }}</option>
+            	@endfor
 			</select>
         </div>
     </div>
