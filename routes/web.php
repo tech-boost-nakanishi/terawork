@@ -13,6 +13,12 @@
 
 Route::get('/', 'RecruitController@top');
 
+Route::get('/profile/{id}', 'ApplyController@profile');
+
+Route::get('sample/mailable/preview', function () {
+  return new App\Mail\ApplyConfirmMail(1);
+});
+
 Route::group(['middleware' => 'auth:user'], function() {
 	Route::get('/dashboard', 'ApplyController@index');
 	Route::get('/logout', 'Auth\LoginController@logout');

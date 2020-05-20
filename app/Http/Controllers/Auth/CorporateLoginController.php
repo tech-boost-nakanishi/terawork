@@ -9,12 +9,15 @@ class CorporateLoginController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('guest:corporate');
+      $this->middleware('guest:corporate')->except('logout');
     }
+
     public function showLoginForm()
     {
-      return view('auth.corporate_login');
+    	Auth::guard('user')->logout();
+      	return view('auth.corporate_login');
     }
+
     public function login(Request $request)
     {
       // Validate the form data

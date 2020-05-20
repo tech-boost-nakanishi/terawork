@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Auth;
 
+use App\User;
 use App\Favorite;
 use App\Apply;
 
@@ -19,6 +20,12 @@ class ApplyController extends Controller
     public function index()
     {
     	return view('apply.dashboard');
+    }
+
+    public function profile($id)
+    {
+    	$user = User::findOrFail($id);
+    	return view('apply.profile', ['user' => $user]);
     }
 
     public function favorite($id)
