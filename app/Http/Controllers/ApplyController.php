@@ -56,9 +56,18 @@ class ApplyController extends Controller
     	$applyuser = Apply::where('user_id', Auth::guard('user')->user()->id)->where('recruit_id', $id)->first();
 
     	if($applyuser === null){
+    		$apply = new Apply;
+    		$apply->user_id = Auth::guard('user')->user()->id;
+    		$apply->recruit_id = $id;
+    		$apply->save();
 
+    		dd($apply->corporate()->email);
+
+    		//Mail::to($request->email)->send(new ApplyConfirmMail(Auth::guard('user')->user()->id));
+
+    		return redirect()->action('ApplyController@pre_apply', ['id' => $id])->with('applysuccess', '応募が完了しました。');
     	}else{
-    		return view('apply.pre_apply')->with('applied', '応募済みです。');
+    		return redirect()->action('ApplyController@pre_apply', ['id' => $id])->with('applied', '応募済みです。');
     	}
     }
 }

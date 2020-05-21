@@ -8,9 +8,13 @@
     <div class="alert alert-danger" role="alert" style="width: 100%;">{{ session('applied') }}</div>
 @endif
 
+@if(session('applysuccess'))
+    <div class="alert alert-success" role="alert" style="width: 100%;">{{ session('applysuccess') }}</div>
+@endif
+
 <h2>求人応募申請画面</h2>
 
-<form action="{{ action('ApplyController@apply', ['id' => $recid]) }}" method="post" enctype="multipart/form-data">
+<form action="{{ action('ApplyController@apply', ['id' => $recid]) }}" method="POST" enctype="multipart/form-data">
 	<div class="form-group row">
 		@if($errors->has('username'))
 		　　<div class="alert alert-danger" role="alert" style="width: 100%;">{{ $errors->first('username') }}</div>

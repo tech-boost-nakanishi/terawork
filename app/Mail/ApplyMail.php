@@ -7,9 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use App\User;
-
-class ApplyConfirmMail extends Mailable
+class ApplyMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,10 +16,9 @@ class ApplyConfirmMail extends Mailable
      *
      * @return void
      */
-    public function __construct($user, $corporate_email)
+    public function __construct()
     {
-        $this->user = User::find($user);
-        $this->corporate_email = $corporate_email;
+        //
     }
 
     /**
@@ -31,12 +28,11 @@ class ApplyConfirmMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.apply_confirm')
-                    ->text('emails.apply_confirm_plain')
-                    ->subject('応募が完了しました。')
+        return $this->view('emails.apply_mail')
+                    ->text('emails.apply_mail_plain')
+                    ->subject('応募がありました。')
                     ->with([
                         'user' => $this->user,
-                        'corporate_email' => $this->corporate_email,
                       ]);
     }
 }

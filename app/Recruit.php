@@ -31,6 +31,11 @@ class Recruit extends Model
     	return $this->belongsTo("App\Corporate");
     }
 
+    public function applies()
+    {
+    	return $this->hasMany("App\Apply");
+    }
+
     public static function boot()
     {
     	parent::boot();

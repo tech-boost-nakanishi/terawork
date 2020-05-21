@@ -19,4 +19,9 @@ class Apply extends Model
         'email' => 'required',
         'phone' => 'required|numeric',
     );
+
+    public function corporate()
+    {
+    	return $this->hasOneThrough("App\Corporate", "App\Recruit");
+    }
 }
