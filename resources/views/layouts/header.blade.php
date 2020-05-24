@@ -39,7 +39,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="margin-top: 10px; font-size: 18px;">
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ action('ApplyController@index') }}">
                             マイページ
                         </a>
                         <a class="dropdown-item" href="{{ url('logout') }}">

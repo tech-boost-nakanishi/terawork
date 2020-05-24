@@ -34,7 +34,7 @@ class LoginController extends Controller
 
         $this->clearLoginAttempts($request);
 
-         Auth::guard('corporate')->logout();
+        Auth::guard('corporate')->logout();
 
         return $this->authenticated($request, $this->guard('user')->user())
                 ?: redirect('/dashboard')->with('login', 'ログインしました。');

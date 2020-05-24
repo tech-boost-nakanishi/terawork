@@ -96,7 +96,7 @@ return [
     'not_regex'            => 'The :attribute format is invalid.',
     'numeric'              => ':attribute は数字のみ有効です',
     'present'              => ':attribute が存在しません',
-    'regex'                => ':attribute 無効な値です',
+    'regex'                => '無効な値です',
     'required'             => ':attribute は必須です',
     'required_if'          => ':attribute は :other が :value には必須です',
     'required_unless'      => ':attribute は :other が :values でなければ必須です',
@@ -163,6 +163,12 @@ return [
         'languages' => '言語',
         'monthly_income' => '月収',
         'pref_name' => '都道府県',
+        'username' => '名前',
+        'phonetic' => 'フリガナ',
+        'age' => '年齢',
+        'live_pref_name' => 'お住いの都道府県',
+        'email' => 'メールアドレス',
+        'phone' => '電話番号',
     ],
 
 ];
