@@ -8,7 +8,7 @@
 	</style>
 </head>
 <body>
-	<h3>{{ $user->name }}様</h3>
+	<h3>{{ $name }}様</h3>
 
 	<p>
 		いつもご利用ありがとうございます。<br>
@@ -19,7 +19,7 @@
 	<p>
 		もし1週間ほど待っても返信がない場合は下記のメールアドレスより<br>
 		直接募集企業にお問い合わせください。<br>
-		
+		<a href="mailto:{{ $corporate_email }}">{{ $corporate_email }}</a>
 	</p>
 
 	<p><a href="{{ url('/') }}">{{ config('app.name') }}</a></p>

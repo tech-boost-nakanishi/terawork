@@ -36,7 +36,7 @@
     </div>
     <hr>
     <div class="form-group row">
-    	@if($errors->has('birth_yaer') || $errors->has('birth_month') || $errors->has('birth_day'))
+    	@if($errors->has('birth_year') || $errors->has('birth_month') || $errors->has('birth_day'))
 		　　<div class="alert alert-danger" role="alert" style="width: 100%;">生年月日を選択してください</div>
 		@endif
         <label class="col-md-12" for="phonetic">生年月日</label>
@@ -151,7 +151,7 @@
 		@endif
         <label class="col-md-12" for="phone">電話番号</label>
         <div class="col-md-12">
-            <input type="tel" class="form-control" name="phone" size="10" maxlength="20" value="{{ old('phone') }}">
+            <input type="tel" class="form-control" name="phone" size="10" maxlength="20" placeholder="ハイフンなしで入力してください" value="{{ old('phone') }}">
         </div>
     </div>
 

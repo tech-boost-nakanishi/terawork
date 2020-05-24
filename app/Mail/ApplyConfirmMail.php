@@ -13,14 +13,17 @@ class ApplyConfirmMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $name;
+    protected $corporate_email;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user, $corporate_email)
+    public function __construct($name, $corporate_email)
     {
-        $this->user = User::find($user);
+        $this->name = $name;
         $this->corporate_email = $corporate_email;
     }
 
@@ -35,7 +38,7 @@ class ApplyConfirmMail extends Mailable
                     ->text('emails.apply_confirm_plain')
                     ->subject('応募が完了しました。')
                     ->with([
-                        'user' => $this->user,
+                        'name' => $this->name,
                         'corporate_email' => $this->corporate_email,
                       ]);
     }

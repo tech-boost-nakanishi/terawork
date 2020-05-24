@@ -20,8 +20,8 @@ class Apply extends Model
         'phone' => 'required|numeric',
     );
 
-    public function corporate()
+    public function recruit()
     {
-    	return $this->hasOneThrough("App\Corporate", "App\Recruit");
+    	return $this->belongsTo("App\Recruit");
     }
 }
