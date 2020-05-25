@@ -8,6 +8,7 @@ use Auth;
 use App\Language;
 use App\Recruit;
 use App\RecruitLanguage;
+use App\ViewHistory;
 
 class RecruitController extends Controller
 {
@@ -20,6 +21,14 @@ class RecruitController extends Controller
     public function show($id)
     {
     	$recruit = Recruit::findOrFail($id);
+
+    	if(Auth::guard('user')->check()){
+	    	$viewhistory = new ViewHistory;
+	    	$viewhistory->user_id = Auth::guard('user')->user()->id;
+	    	$viewhistory->recruit_id = $id;
+	    	$viewhistory->save();
+	    }
+
     	return view('recruit.index', ['recruit' => $recruit]);
     } 
 
