@@ -22,6 +22,9 @@ class ApplyController extends Controller
 
     public function index()
     {
+    	$applyrecs = Auth::guard('user')->user()->applies()->orderby('created_at', 'desc')->take(5)->get();
+    	$viewrecs = Auth::guard('user')->user()->viewhistories()->orderby('created_at', 'desc')->take(5)->get();
+    	$favrecs = Auth::guard('user')->user()->favorites()->orderby('created_at', 'desc')->take(5)->get();
     	return view('apply.dashboard');
     }
 
