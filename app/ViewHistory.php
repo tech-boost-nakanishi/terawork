@@ -10,4 +10,9 @@ class ViewHistory extends Model
     {
     	return $this->belongsTo("App\User");
     }
+
+    public function recruit()
+    {
+    	return $this->belongsTo("App\Recruit");
+    }
 }

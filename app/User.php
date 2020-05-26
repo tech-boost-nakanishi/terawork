@@ -39,16 +39,16 @@ class User extends Authenticatable
 
     public function applies()
     {
-        return $this->belongsToMany("App\Recruit", "applies");
+        return $this->hasMany("App\Apply");
     }
 
     public function viewhistories()
     {
-        return $this->belongsToMany("App\Recruit", "view_histories");
+        return $this->hasMany("App\ViewHistory");
     }
 
     public function favorites()
     {
-        return $this->belongsToMany("App\Recruit", "favorites");
+        return $this->hasMany("App\Favorite");
     }
 }

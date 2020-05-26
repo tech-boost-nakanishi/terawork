@@ -22,7 +22,8 @@ class RecruitController extends Controller
     {
     	$recruit = Recruit::findOrFail($id);
 
-    	if(Auth::guard('user')->check()){
+    	$recview = ViewHistory::where('user_id', Auth::guard('user')->user()->id)->where('recruit_id', $id)->first();
+    	if(Auth::guard('user')->check() && $recview === null){
 	    	$viewhistory = new ViewHistory;
 	    	$viewhistory->user_id = Auth::guard('user')->user()->id;
 	    	$viewhistory->recruit_id = $id;
