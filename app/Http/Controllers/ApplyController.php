@@ -28,6 +28,27 @@ class ApplyController extends Controller
     	return view('apply.dashboard', ['applyrecs' => $applyrecs, 'viewrecs' => $viewrecs, 'favrecs' => $favrecs]);
     }
 
+    public function applylist($id)
+    {
+    	$user = User::findOrFail($id);
+    	$applylist = $user->applies()->orderby('created_at', 'desc')->paginate(10);
+    	return view('apply.applylist', ['applylist' => $applylist, 'user' => $user]);
+    }
+
+    public function viewlist($id)
+    {
+    	$user = User::findOrFail($id);
+    	$viewlist = $user->viewhistories()->orderby('created_at', 'desc')->paginate(10);
+    	return view('apply.viewlist', ['viewlist' => $viewlist, 'user' => $user]);
+    }
+
+    public function favoritelist($id)
+    {
+    	$user = User::findOrFail($id);
+    	$favoritelist = $user->favorites()->orderby('created_at', 'desc')->paginate(10);
+    	return view('apply.favoritelist', ['favoritelist' => $favoritelist, 'user' => $user]);
+    }
+
     public function profile($id)
     {
     	$user = User::findOrFail($id);

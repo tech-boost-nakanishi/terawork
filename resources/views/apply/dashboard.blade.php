@@ -30,7 +30,7 @@
 			@endforeach
 		</tbody>
 	</table>
-	<a href="#" style="float: right;">もっと見る</a>
+	<a href="{{ action('ApplyController@applylist', ['id' => Auth::guard('user')->user()->id]) }}" style="float: right;">もっと見る</a>
 </div>
 
 <div style="clear: both;"></div>
@@ -51,7 +51,7 @@
 			@endforeach
 		</tbody>
 	</table>
-	<a href="#" style="float: right;">もっと見る</a>
+	<a href="{{ action('ApplyController@viewlist', ['id' => Auth::guard('user')->user()->id]) }}" style="float: right;">もっと見る</a>
 </div>
 
 <div style="clear: both;"></div>
@@ -72,10 +72,9 @@
 			@endforeach
 		</tbody>
 	</table>
-	<a href="#" style="float: right;">もっと見る</a>
+	<a href="{{ action('ApplyController@favoritelist', ['id' => Auth::guard('user')->user()->id]) }}" style="float: right;">もっと見る</a>
 </div>
 <div style="clear: both;"></div>
 
-<p style="font-size: 18px; font-weight: bold; border-bottom: 1px solid #000; margin-top: 30px;">{{ Auth::guard('user')->user()->name }}さんのプロフィール</p>
 @endsection
 @include('layouts.footer')
