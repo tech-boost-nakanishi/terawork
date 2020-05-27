@@ -14,6 +14,9 @@
 Route::get('/', 'RecruitController@top');
 
 Route::get('/profile/{id}', 'ApplyController@profile');
+Route::get('/list/applies/{id}', 'ApplyController@applylist');
+Route::get('/list/views/{id}', 'ApplyController@viewlist');
+Route::get('/list/favorites/{id}', 'ApplyController@favoritelist');
 
 Route::group(['middleware' => 'auth:user'], function() {
 	Route::get('/dashboard', 'ApplyController@index');
