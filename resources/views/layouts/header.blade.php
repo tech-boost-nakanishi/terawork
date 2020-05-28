@@ -42,6 +42,9 @@
                         <a class="dropdown-item" href="{{ action('ApplyController@index') }}">
                             マイページ
                         </a>
+                        <a class="dropdown-item" href="{{ action('ApplyController@profile', ['id' => Auth::guard('user')->user()->id]) }}">
+                            プロフィール
+                        </a>
                         <a class="dropdown-item" href="{{ url('logout') }}">
                             ログアウト
                         </a>

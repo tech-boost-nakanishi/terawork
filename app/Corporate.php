@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Corporate extends Authenticatable
 {
     use Notifiable;
-    protected $guard = 'corporate';
 
     /**
      * The attributes that are mass assignable.

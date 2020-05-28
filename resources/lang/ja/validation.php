@@ -158,6 +158,7 @@ return [
     */
 
     'attributes' => [
+        'password' => 'パスワード',
         'title' => 'タイトル',
         'body' => '本文',
         'languages' => '言語',

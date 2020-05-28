@@ -3,6 +3,8 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 use Auth;
 
 class CorporateLoginController extends Controller
@@ -14,16 +16,15 @@ class CorporateLoginController extends Controller
 
     public function showLoginForm()
     {
-    	Auth::guard('user')->logout();
       	return view('auth.corporate_login');
     }
 
     public function login(Request $request)
     {
-      // Validate the form data
-      $this->validate($request, [
-        'email'   => 'required|email',
-        'password' => 'required|min:6'
+
+      $validator = Validator::make($request->all(), [
+      		'email'   => 'required|string',
+        	'password' => 'required|string'
       ]);
 
       // Attempt to log the user in
@@ -33,6 +34,8 @@ class CorporateLoginController extends Controller
         return redirect()->route('corporate.dashboard')->with('login', 'ログインしました。');
       }
       // if unsuccessful, then redirect back to the login with the form data
+      $validator->errors()->add('email', trans('auth.failed'));
+	  throw new ValidationException($validator);
       return redirect()->back()->withInput($request->only('email', 'remember'));
     }
 

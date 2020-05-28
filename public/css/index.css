@@ -33,6 +33,18 @@ nav {
 	border: 2px solid #dcdcdc;
 }
 
+.profile-header {
+	font-weight: bold;
+	font-size: 20px;
+	text-align: right;
+	background-color: #222;
+	color: #fff;
+}
+
+.profile-body {
+	font-size: 20px;
+}
+
 footer {
 	margin-top: 50px;
 	padding-top: 20px;

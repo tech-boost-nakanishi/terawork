@@ -55,6 +55,15 @@ class ApplyController extends Controller
     	return view('apply.profile', ['user' => $user]);
     }
 
+    public function profileedit($id)
+    {
+    	$user = User::findOrFail($id);
+    	if($id != Auth::guard('user')->user()->id){
+    		abort(404);
+    	}
+    	return view('apply.profile_edit', ['user' => $user]);
+    }
+
     public function favorite($id)
     {
     	$favrec = Favorite::where('user_id', Auth::guard('user')->user()->id)->where('recruit_id', $id)->first();
