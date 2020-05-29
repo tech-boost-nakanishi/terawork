@@ -5,7 +5,7 @@
         <ul>
             <li><a href="{{ url('/') }}">ホーム</a></li>
             <li><a href="#">掲載企業一覧</a></li>
-            <li><a href="#">{{ config('app.name') }}について</a></li>
+            <li><a href="{{ url('about') }}">{{ config('app.name') }}について</a></li>
         </ul>
 
         <ul>
