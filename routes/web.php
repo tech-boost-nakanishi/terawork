@@ -20,6 +20,8 @@ Route::get('/list/favorites/{id}', 'ApplyController@favoritelist');
 
 Route::group(['middleware' => 'auth:user'], function() {
 	Route::get('/dashboard', 'ApplyController@index');
+	Route::get('/profile/edit/{id}', 'ApplyController@profileedit');
+	Route::post('/profile/edit/{id}', 'ApplyController@profileupdate');
 	Route::get('/logout', 'Auth\LoginController@logout');
 });
 

@@ -55,6 +55,44 @@ class ApplyController extends Controller
     	return view('apply.profile', ['user' => $user]);
     }
 
+    public function profileedit($id)
+    {
+    	$user = User::findOrFail($id);
+    	if($id != Auth::guard('user')->user()->id){
+    		abort(404);
+    	}
+    	return view('apply.profile_edit', ['user' => $user]);
+    }
+
+    public function profileupdate($id, Request $request)
+    {
+    	$user = User::findOrFail($id);
+    	$form = $request->all();
+
+    	if(!empty($request->qualification)){
+    		$user->qualification = str_replace('／', '/', $request->qualification);
+    	}else{
+    		$user->qualification = null;
+    	}
+
+    	if(!empty($request->hobby)){
+    		$user->hobby = str_replace('／', '/', $request->hobby);
+    	}else{
+    		$user->hobby = null;
+    	}
+
+    	if(!empty($request->introduction)){
+    		$user->introduction = $request->introduction;
+    	}else{
+    		$user->introduction = null;
+    	}
+
+    	unset($form['_token']);
+		$user->save();
+
+		return redirect()->action('ApplyController@profileedit', ['id' => $id])->with('profileedited', 'プロフィールを更新しました。');
+    }
+
     public function favorite($id)
     {
     	$favrec = Favorite::where('user_id', Auth::guard('user')->user()->id)->where('recruit_id', $id)->first();

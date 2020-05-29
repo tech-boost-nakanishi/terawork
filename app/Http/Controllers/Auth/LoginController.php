@@ -24,7 +24,6 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        Auth::guard('corporate')->logout();
         return view('auth.login');
     }
 

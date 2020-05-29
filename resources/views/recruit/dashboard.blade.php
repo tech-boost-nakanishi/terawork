@@ -32,7 +32,7 @@
                 <td>{{ $rec->created_at->format('Y年m月d日 H:i') }}</td>
                 <td><a href="{{ action('RecruitController@show', ['id' => $rec->id]) }}">{{ $rec->title }}</a></td>
                 <td>{{ $rec->status }}</td>
-                <td>0人</td>
+                <td>{{ count($rec->applies) }}人</td>
                 <td>
                     <a href="{{ route('recruit.edit', ['id' => $rec->id]) }}" class="btn btn-info">編集</a>
                     <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ $rec->id }}">削除</a>
