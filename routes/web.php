@@ -13,6 +13,10 @@
 
 Route::get('/', 'RecruitController@top');
 
+Route::get('/about', function(){
+	return view('about');
+});
+
 Route::get('/profile/{id}', 'ApplyController@profile');
 Route::get('/list/applies/{id}', 'ApplyController@applylist');
 Route::get('/list/views/{id}', 'ApplyController@viewlist');
