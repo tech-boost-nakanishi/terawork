@@ -14,6 +14,26 @@
 <table class="table table-bordered">
 	<form action="{{ action('ApplyController@profileupdate', ['id' => $user->id]) }}" method="post" enctype="multipart/form-data">
 		<tr>
+			<th class="profile-header" width="20%">名前</th>
+			<td>
+				<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}">
+				@error('name')
+                    <span style="color: #ff0000;" role="alert">
+                        <strong>{{ $errors->first('name') }}</strong>
+                    </span>
+                @enderror
+			</td>
+		</tr>
+		<tr>
+			@if($errors->has('email'))
+			　　<div class="alert alert-danger" role="alert" style="width: 100%;">{{ $errors->first('email') }}</div>
+			@endif
+			<th class="profile-header" width="20%">メールアドレス</th>
+			<td>
+				<input type="text" class="form-control" name="email" value="{{ $user->email }}">
+			</td>
+		</tr>
+		<tr>
 			<th class="profile-header" width="20%">資格</th>
 			<td>
 				<p style="margin: 0; color: #ff0000; font-size: 16px;">（複数ある場合は/で区切ってください。）</p>

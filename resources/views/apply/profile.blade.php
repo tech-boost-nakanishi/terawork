@@ -11,6 +11,26 @@
 
 <table class="table table-bordered">
 	<tr>
+		<th class="profile-header" width="20%">名前</th>
+		<td>
+			@if(!is_null(Auth::guard('user')->user()->name))
+				<p class="col-md-10 profile-body">{{ Auth::guard('user')->user()->name }}</p>
+			@else
+				<p class="col-md-10 profile-body">未設定です。</p>
+			@endif
+		</td>
+	</tr>
+	<tr>
+		<th class="profile-header" width="20%">メールアドレス</th>
+		<td>
+			@if(!is_null(Auth::guard('user')->user()->email))
+				<p class="col-md-10 profile-body">{{ Auth::guard('user')->user()->email }}</p>
+			@else
+				<p class="col-md-10 profile-body">未設定です。</p>
+			@endif
+		</td>
+	</tr>
+	<tr>
 		<th class="profile-header" width="20%">資格</th>
 		<td>
 			@if(!is_null(Auth::guard('user')->user()->qualification))
