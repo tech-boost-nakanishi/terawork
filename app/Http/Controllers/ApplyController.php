@@ -66,6 +66,8 @@ class ApplyController extends Controller
 
     public function profileupdate($id, Request $request)
     {
+    	$this->validate($request, User::rules($request->all()));
+
     	$user = User::findOrFail($id);
     	$form = $request->all();
 
@@ -86,6 +88,9 @@ class ApplyController extends Controller
     	}else{
     		$user->introduction = null;
     	}
+
+    	$user->name = $request->name;
+    	$user->email = $request->email;
 
     	unset($form['_token']);
 		$user->save();
