@@ -5,36 +5,20 @@
 @include('layouts.sidebar')
 @section('content')
 
-<h2>{{ $user->name }}さんのプロフィール</h2>
+<h2 style="margin-bottom: 20px;">{{ $user->name }}さんのプロフィール</h2>
 
-<a href="{{ action('ApplyController@profileedit', ['id' => Auth::guard('user')->user()->id]) }}" class="btn btn-primary float-right" style="margin: 20px 0; width: 90px;">編集する</a>
+@auth('user')
+	@if($user->id == Auth::guard('user')->user()->id)
+		<a href="{{ action('ApplyController@profileedit', ['id' => $user->id]) }}" class="btn btn-primary float-right" style="width: 90px;">編集する</a>
+	@endif
+@endauth
 
-<table class="table table-bordered">
-	<tr>
-		<th class="profile-header" width="20%">名前</th>
-		<td>
-			@if(!is_null(Auth::guard('user')->user()->name))
-				<p class="col-md-10 profile-body">{{ Auth::guard('user')->user()->name }}</p>
-			@else
-				<p class="col-md-10 profile-body">未設定です。</p>
-			@endif
-		</td>
-	</tr>
-	<tr>
-		<th class="profile-header" width="20%">メールアドレス</th>
-		<td>
-			@if(!is_null(Auth::guard('user')->user()->email))
-				<p class="col-md-10 profile-body">{{ Auth::guard('user')->user()->email }}</p>
-			@else
-				<p class="col-md-10 profile-body">未設定です。</p>
-			@endif
-		</td>
-	</tr>
+<table class="table table-bordered" style="margin-top: 20px;">
 	<tr>
 		<th class="profile-header" width="20%">資格</th>
 		<td>
-			@if(!is_null(Auth::guard('user')->user()->qualification))
-				<p class="col-md-10 profile-body">{{ Auth::guard('user')->user()->qualification }}</p>
+			@if(!is_null($user->qualification))
+				<p class="col-md-10 profile-body">{{ $user->qualification }}</p>
 			@else
 				<p class="col-md-10 profile-body">未設定です。</p>
 			@endif
@@ -43,8 +27,8 @@
 	<tr>
 		<th class="profile-header" width="20%">趣味</th>
 		<td>
-			@if(!is_null(Auth::guard('user')->user()->hobby))
-				<p class="col-md-10 profile-body">{{ Auth::guard('user')->user()->hobby }}</p>
+			@if(!is_null($user->hobby))
+				<p class="col-md-10 profile-body">{{ $user->hobby }}</p>
 			@else
 				<p class="col-md-10 profile-body">未設定です。</p>
 			@endif
@@ -53,8 +37,8 @@
 	<tr>
 		<th class="profile-header" width="20%">自己紹介</th>
 		<td>
-			@if(!is_null(Auth::guard('user')->user()->introduction))
-				<p class="col-md-10 profile-body">{{ Auth::guard('user')->user()->introduction }}</p>
+			@if(!is_null($user->introduction))
+				<p class="col-md-10 profile-body">{{ $user->introduction }}</p>
 			@else
 				<p class="col-md-10 profile-body">未設定です。</p>
 			@endif

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
+use Carbon\Carbon;
 use App\Language;
 use App\Recruit;
 use App\RecruitLanguage;
 use App\ViewHistory;
+use App\Corporate;
 
 class RecruitController extends Controller
 {
@@ -22,13 +24,18 @@ class RecruitController extends Controller
     {
     	$recruit = Recruit::findOrFail($id);
 
-    	$recview = ViewHistory::where('user_id', Auth::guard('user')->user()->id)->where('recruit_id', $id)->first();
-    	if(Auth::guard('user')->check() && $recview === null){
-	    	$viewhistory = new ViewHistory;
-	    	$viewhistory->user_id = Auth::guard('user')->user()->id;
-	    	$viewhistory->recruit_id = $id;
-	    	$viewhistory->save();
-	    }
+    	if(Auth::guard('user')->check()){
+	    	$recview = ViewHistory::where('user_id', Auth::guard('user')->user()->id)->where('recruit_id', $id)->first();
+	    	if($recview === null){
+		    	$viewhistory = new ViewHistory;
+		    	$viewhistory->user_id = Auth::guard('user')->user()->id;
+		    	$viewhistory->recruit_id = $id;
+		    	$viewhistory->save();
+		    }else{
+		    	$recview->updated_at = Carbon::now();
+		    	$recview->save();
+		    }
+		}
 
     	return view('recruit.index', ['recruit' => $recruit]);
     } 
@@ -103,6 +110,38 @@ class RecruitController extends Controller
     	unset($form['_token']);
 
     	return redirect()->route('recruit.edit', ['id' => $request->id])->with('recruitupdated', '求人を更新しました。');
+    }
+
+    public function profile($id)
+    {
+    	$corporate = Corporate::findOrFail($id);
+    	return view('recruit.profile', ['corporate' => $corporate]);
+    }
+
+    public function profileedit($id)
+    {
+    	$corporate = Corporate::findOrFail($id);
+    	if($id != Auth::guard('corporate')->user()->id){
+    		abort(404);
+    	}
+    	return view('recruit.profile_edit', ['corporate' => $corporate]);
+    }
+
+    public function profileupdate($id, Request $request)
+    {
+    	$this->validate($request, Corporate::rules($request->all()));
+
+    	$corporate = Corporate::findOrFail($id);
+    	$form = $request->all();
+
+    	$corporate->corporate_name = $request->corporate_name;
+    	$corporate->contact_name = $request->contact_name;
+    	$corporate->email = $request->email;
+
+    	unset($form['_token']);
+		$corporate->save();
+
+		return redirect()->action('RecruitController@profileedit', ['id' => $id])->with('profileedited', 'プロフィールを更新しました。');
     }
 
     public function delete(Request $request)

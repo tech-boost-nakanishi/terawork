@@ -17,7 +17,7 @@ Route::get('/about', function(){
 	return view('about');
 });
 
-Route::get('/profile/{id}', 'ApplyController@profile');
+Route::get('/profile/show/{id}', 'ApplyController@profile');
 Route::get('/list/applies/{id}', 'ApplyController@applylist');
 Route::get('/list/views/{id}', 'ApplyController@viewlist');
 Route::get('/list/favorites/{id}', 'ApplyController@favoritelist');
@@ -37,6 +37,8 @@ Route::group(['prefix' => 'corporate'], function() {
 		Route::post('/recruit/create', 'RecruitController@create');
 		Route::get('/recruit/edit/{id}', 'RecruitController@edit')->name('recruit.edit');
 		Route::post('/recruit/edit', 'RecruitController@update');
+		Route::get('/profile/edit/{id}', 'RecruitController@profileedit');
+		Route::post('/profile/edit/{id}', 'RecruitController@profileupdate');
 		Route::get('/recruit/delete', 'RecruitController@delete');
 		Route::get('/logout', 'CorporateController@logout');
 	});
@@ -53,6 +55,7 @@ Route::group(['prefix' => 'corporate'], function() {
     Route::post('/register', 'Auth\CorporateRegisterController@register')->name('corporate.register.submit');
 
     Route::get('/recruit/show/{id}', 'RecruitController@show');
+    Route::get('/profile/show/{id}', 'RecruitController@profile');
 });
 
 Auth::routes();
