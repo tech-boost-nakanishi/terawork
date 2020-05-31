@@ -15,11 +15,6 @@ use App\Apply;
 
 class ApplyController extends Controller
 {
-	public function __construct()
-    {
-        $this->middleware('auth:user');
-    }
-
     public function index()
     {
     	$applyrecs = Auth::guard('user')->user()->applies()->orderby('created_at', 'desc')->take(3)->get();

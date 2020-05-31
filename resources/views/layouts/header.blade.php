@@ -24,6 +24,9 @@
                         <a class="dropdown-item" href="{{ route('corporate.dashboard') }}">
                             マイページ
                         </a>
+                        <a class="dropdown-item" href="{{ action('RecruitController@profile', ['id' => Auth::guard('corporate')->user()->id]) }}">
+                            プロフィール
+                        </a>
                         <a class="dropdown-item" href="{{ action('RecruitController@add') }}">
                             募集する
                         </a>

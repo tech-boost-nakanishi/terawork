@@ -5,10 +5,23 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Validation\Rule;
+use Auth;
 
 class Corporate extends Authenticatable
 {
     use Notifiable;
+
+    protected $guarded = array('id');
+
+    public static function rules(array $data)
+    {
+        return [
+            'corporate_name' => ['required', 'string', 'max:255'],
+            'contact_name' => ['required', 'string', 'max:255', 'regex:/^[ぁ-んァ-ヶー一-龠]+$/'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('corporates')->ignore(Auth::guard('corporate')->user()->id)],
+        ];
+    }
 
     /**
      * The attributes that are mass assignable.

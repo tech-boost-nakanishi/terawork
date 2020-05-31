@@ -46,7 +46,7 @@
 			@foreach($viewrecs as $viewrec)
 				<tr>
 					<td style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"><a href="{{ action('RecruitController@show', ['id' => $viewrec->id]) }}">{{ $viewrec->recruit->title }}</a></td>
-					<td>{{ $viewrec->created_at }}</td>
+					<td>{{ $viewrec->updated_at }}</td>
 				</tr>
 			@endforeach
 		</tbody>
