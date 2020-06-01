@@ -19,9 +19,12 @@
 
 <h2 style="font-size: 26px;">{{ $recruit->title }}</h2>
 
-<table class="table table-bordered" style="margin: 30px 0;">
+<h4 style="margin-top: 30px;">{{ $recruit->corporate->corporate_name }}</h4>
+<p style="font-size: 16px;">担当：{{ $recruit->corporate->contact_name }}</p>
+
+<table class="table table-bordered">
     <tr>
-        <th class="bg-light" style="min-width: 100px;">都道府県</th>
+        <th class="bg-light" width="20%">都道府県</th>
         <td>{{ $recruit->pref_name }}</td>
     </tr>
     <tr>
