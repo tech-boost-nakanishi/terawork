@@ -35,7 +35,7 @@
         <th class="bg-light">言語</th>
         <td>
             @foreach($recruit->languages as $reclang)
-                <a href="#" style="margin-right: 5px;">{{ $reclang->name }}</a>
+                <a href="{{ action('RecruitController@languagelist', ['language' => $reclang->name]) }}" style="margin-right: 5px;">{{ $reclang->name }}</a>
             @endforeach
         </td>
     </tr>

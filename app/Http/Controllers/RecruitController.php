@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Carbon\Carbon;
 use App\Language;
 use App\Recruit;
@@ -14,10 +15,25 @@ use App\Corporate;
 
 class RecruitController extends Controller
 {
-    public function top()
+    public function top(Request $request)
     {
-    	$recruits = Recruit::orderby('created_at', 'desc')->paginate(12);
-    	return view('top', ['recruits' => $recruits]);
+        $PerPage = 12;
+        $from = 0;
+        $to = 0;
+    	$recruits = Recruit::where('status', '募集中')->orderby('created_at', 'desc')->paginate($PerPage);
+
+        if($request->input('page', 1) * $PerPage - $PerPage + 1 < count($recruits)){
+            $from = $request->input('page', 1) * $PerPage - $PerPage + 1;
+        }else{
+            $from = count($recruits);
+        }
+
+        if($from + $PerPage - 1 < count($recruits)){
+            $to = $from + $PerPage - 1;
+        }else{
+            $to = count($recruits);
+        }
+    	return view('top', ['recruits' => $recruits, 'from' => $from, 'to' => $to]);
     }
 
     public function show($id)
@@ -38,7 +54,48 @@ class RecruitController extends Controller
 		}
 
     	return view('recruit.index', ['recruit' => $recruit]);
-    } 
+    }
+
+    public function languagelist($language, Request $request)
+    {
+        $result = Recruit::where('status', '募集中')->orderby('created_at', 'desc')->get();
+        $recruit = [];
+        foreach ($result as $key => $value) {
+            if($value->languages()->get()->contains('name', $language)){
+                $recruit[] = $value;
+            }
+        }
+
+        $recruits = [];
+        $from = 0;
+        $to = 0;
+        if(count($recruit) > 0){
+            $PerPage = 12;   //1ページあたりの件数
+            $displayData = array_chunk($recruit, $PerPage);
+            $currentPageNo = $request->input('page', 1);
+
+            $recruits = new LengthAwarePaginator(
+                $displayData[$currentPageNo - 1],
+                count($recruit),
+                $PerPage,
+                $currentPageNo,
+                array('path' => $request->url())
+            );
+
+            if($request->input('page', 1) * $PerPage - $PerPage + 1 < count($recruit)){
+                $from = $request->input('page', 1) * $PerPage - $PerPage + 1;
+            }else{
+                $from = count($recruit);
+            }
+
+            if($from + $PerPage - 1 < count($recruit)){
+                $to = $from + $PerPage - 1;
+            }else{
+                $to = count($recruit);
+            }
+        }
+        return view('recruit.languages_list', ['recruits' => $recruits, 'recruit' => $recruit, 'language' => $language, 'from' => $from, 'to' => $to]);
+    }
 
     public function add()
     {
