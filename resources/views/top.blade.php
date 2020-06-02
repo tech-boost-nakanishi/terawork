@@ -8,38 +8,38 @@
     <div class="alert alert-info" role="alert" style="width: 100%;">{{ session('logout') }}</div>
 @endif
 
-<h2>求人一覧<span style="font-size: 18px; margin-left: 20px;">{{ count($recruits) }}件</span><span class="d-none d-sm-block" style="font-size: 18px; font-weight: normal; display: block; text-align: right; margin-top: -20px;">xx件〜xx件を表示</span></h2>
+<h2>求人一覧<span style="font-size: 18px; margin-left: 20px;">{{ $recruits->total() }}件</span><span class="d-none d-sm-block" style="font-size: 18px; font-weight: normal; display: block; text-align: right; margin-top: -20px;">{{ $from }}件〜{{ $to }}件を表示</span></h2>
 
 <div class="card-columns">
-    @foreach($recruits as $recruit)
+    @foreach($recruits as $rec)
         <div class="card mt-3">
             <div class="card-header" style="width: 100%; background-color: #d8d8d8; color: #000; font-weight: bold;">
-                {{ \Str::limit($recruit->title, 30) }}
+                {{ \Str::limit($rec->title, 30) }}
             </div>
                 <div class="card-body">
                 <p class="card-text">
-                    {{ \Str::limit($recruit->body, 50) }}
+                    {{ \Str::limit($rec->body, 50) }}
                 </p>
                 <table class="table">
                     <tr>
                         <th>都道府県</th>
-                        <td>{{ $recruit->pref_name }}</td>
+                        <td>{{ $rec->pref_name }}</td>
                     </tr>
                     <tr>
                         <th>月収</th>
-                        <td>約{{ $recruit->monthly_income }}万円以上</td>
+                        <td>約{{ $rec->monthly_income }}万円以上</td>
                     </tr>
                     <tr>
                         <th>言語</th>
                         <td style="width: 65%; word-wrap: break-word;">
-                            @foreach($recruit->languages as $reclang)
-                                <a href="#" style="margin-right: 5px;">{{ $reclang->name }}</a>
+                            @foreach($rec->languages as $reclang)
+                                <a href="{{ action('RecruitController@languagelist', ['language' => $reclang->name]) }}" style="margin-right: 5px;">{{ $reclang->name }}</a>
                             @endforeach
                         </td>
                     </tr>
                 </table>
             </div>
-            <a class="btn" href="{{ action('RecruitController@show', ['id' => $recruit->id]) }}" style="display: block; margin: 10px auto; margin-top: -10px; width: 100px; background-color: #FFBF00;">詳細を見る</a>
+            <a class="btn" href="{{ action('RecruitController@show', ['id' => $rec->id]) }}" style="display: block; margin: 10px auto; margin-top: -10px; width: 100px; background-color: #FFBF00;">詳細を見る</a>
         </div>
     @endforeach
 </div>
