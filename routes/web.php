@@ -56,6 +56,7 @@ Route::group(['prefix' => 'corporate'], function() {
 
     Route::get('/recruit/show/{id}', 'RecruitController@show');
     Route::get('/recruit/language/{language}', 'RecruitController@languagelist');
+    Route::get('/recruit/search', 'RecruitSearchController@search');
     Route::get('/profile/show/{id}', 'RecruitController@profile');
 });
 
