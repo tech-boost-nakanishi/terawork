@@ -15,7 +15,7 @@ class RecruitSearchController extends Controller
     	$s_language = $request->language;
     	$s_keyword = $request->keyword;
 
-    	$PerPage = 1;
+    	$PerPage = 12;
 
     	$query = Recruit::query();
     	$query->where('status', '募集中')->orderby('created_at', 'desc');
@@ -35,7 +35,7 @@ class RecruitSearchController extends Controller
     	if(!empty($s_language)){
     		foreach ($query as $key => $value) {
     			if(!in_array($s_language, $value->languages()->get('name'))){
-    				unset($value);
+    				unset($query[$key]);
     			}
     		}
     	}

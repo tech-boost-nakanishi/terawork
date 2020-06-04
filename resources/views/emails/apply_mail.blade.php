@@ -26,6 +26,8 @@
 	電話番号：{{ $phone }}
 	<p style="margin: 0; padding: 0;">=================================</p>
 
+	<p>{{ $username }}さんのプロフィールは<a href="{{ action('ApplyController@profile', ['id' => $user_id]) }}">こちら</a></p>
+
 	<p>これより直接メールか電話にて、応募者と連絡お願いします。</p>
 
 	<p><a href="{{ url('/') }}">{{ config('app.name') }}</a></p>

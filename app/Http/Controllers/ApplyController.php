@@ -136,6 +136,7 @@ class ApplyController extends Controller
 
     		Mail::to($corporate->email)->send(new ApplyMail(
     			$username = $request->username,
+                $user_id = $apply->user_id,
     			$phonetic = $request->phonetic,
     			$birth_yaer = $request->birth_year,
     			$birth_month = $request->birth_month,
