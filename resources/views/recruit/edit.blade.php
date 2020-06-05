@@ -11,7 +11,7 @@
 
 <h2>求人編集画面</h2>
 
-<form action="{{ action('RecruitController@update') }}" method="post" enctype="multipart/form-data">
+<form action="{{ action('RecruitController@update', ['id' => $recruit->id]) }}" method="post" enctype="multipart/form-data">
     <div class="form-group row">
         @if($errors->has('status'))
         　　<div class="alert alert-danger" role="alert" style="width: 100%;">{{ $errors->first('status') }}</div>

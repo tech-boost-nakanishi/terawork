@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ApplyConfirmMail;
 use App\Mail\ApplyMail;
+use Illuminate\Support\Facades\Gate;
 
 use Auth;
 
@@ -26,6 +27,7 @@ class ApplyController extends Controller
     public function applylist($id)
     {
     	$user = User::findOrFail($id);
+        Gate::authorize('view', $id, Auth::guard('user')->user()->id);
     	$applylist = $user->applies()->orderby('created_at', 'desc')->paginate(10);
     	return view('apply.applylist', ['applylist' => $applylist, 'user' => $user]);
     }
@@ -33,6 +35,7 @@ class ApplyController extends Controller
     public function viewlist($id)
     {
     	$user = User::findOrFail($id);
+        Gate::authorize('view', $id, Auth::guard('user')->user()->id);
     	$viewlist = $user->viewhistories()->orderby('created_at', 'desc')->paginate(10);
     	return view('apply.viewlist', ['viewlist' => $viewlist, 'user' => $user]);
     }
@@ -40,6 +43,7 @@ class ApplyController extends Controller
     public function favoritelist($id)
     {
     	$user = User::findOrFail($id);
+        Gate::authorize('view', $id, Auth::guard('user')->user()->id);
     	$favoritelist = $user->favorites()->orderby('created_at', 'desc')->paginate(10);
     	return view('apply.favoritelist', ['favoritelist' => $favoritelist, 'user' => $user]);
     }
@@ -53,9 +57,7 @@ class ApplyController extends Controller
     public function profileedit($id)
     {
     	$user = User::findOrFail($id);
-    	if($id != Auth::guard('user')->user()->id){
-    		abort(404);
-    	}
+        Gate::authorize('userprofile', $id, Auth::guard('user')->user()->id);
     	return view('apply.profile_edit', ['user' => $user]);
     }
 
@@ -64,6 +66,7 @@ class ApplyController extends Controller
     	$this->validate($request, User::rules($request->all()));
 
     	$user = User::findOrFail($id);
+        Gate::authorize('userprofile', $id, Auth::guard('user')->user()->id);
     	$form = $request->all();
 
     	if(!empty($request->qualification)){

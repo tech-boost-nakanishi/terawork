@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 use Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -53,7 +54,9 @@ class RecruitController extends Controller
 		    }
 		}
 
-    	return view('recruit.index', ['recruit' => $recruit]);
+        $recruitdata = \DB::table('recruits')->join('recruit_languages', 'recruits.id' , '=', 'recruit_languages.recruit_id')->get();
+
+    	return view('recruit.index', ['recruit' => $recruit, 'recruitdata' => $recruitdata]);
     }
 
     public function languagelist($language, Request $request)
@@ -131,18 +134,16 @@ class RecruitController extends Controller
     public function edit($id)
     {
     	$recruit = Recruit::findOrFail($id);
-    	if($recruit->corporate_id != Auth::guard('corporate')->user()->id){
-    		abort(404);
-    	}
-
+    	Gate::authorize('update-recruit', $recruit);
     	return view('recruit.edit', ['recruit' => $recruit]);
     }
 
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
     	$this->validate($request, Recruit::$rules);
 
-    	$recruit = Recruit::find($request->id);
+    	$recruit = Recruit::findOrFail($id);
+        Gate::authorize('update-recruit', $recruit);
     	$form = $request->all();
 
     	$recruit->corporate_id = Auth::guard('corporate')->user()->id;
@@ -166,7 +167,7 @@ class RecruitController extends Controller
 
     	unset($form['_token']);
 
-    	return redirect()->route('recruit.edit', ['id' => $request->id])->with('recruitupdated', '求人を更新しました。');
+    	return redirect()->action('RecruitController@edit', ['id' => $id])->with('recruitupdated', '求人を更新しました。');
     }
 
     public function profile($id)
@@ -178,9 +179,7 @@ class RecruitController extends Controller
     public function profileedit($id)
     {
     	$corporate = Corporate::findOrFail($id);
-    	if($id != Auth::guard('corporate')->user()->id){
-    		abort(404);
-    	}
+        Gate::authorize('corporateprofile', $id, Auth::guard('corporate')->user()->id);
     	return view('recruit.profile_edit', ['corporate' => $corporate]);
     }
 
@@ -189,6 +188,7 @@ class RecruitController extends Controller
     	$this->validate($request, Corporate::rules($request->all()));
 
     	$corporate = Corporate::findOrFail($id);
+        Gate::authorize('corporateprofile', $id, Auth::guard('corporate')->user()->id);
     	$form = $request->all();
 
     	$corporate->corporate_name = $request->corporate_name;
@@ -201,15 +201,11 @@ class RecruitController extends Controller
 		return redirect()->action('RecruitController@profileedit', ['id' => $id])->with('profileedited', 'プロフィールを更新しました。');
     }
 
-    public function delete(Request $request)
+    public function delete($id, Request $request)
     {
-    	$recruit = Recruit::find($request->id);
-
-    	if($recruit->corporate_id == Auth::guard('corporate')->user()->id){
-    		$recruit->delete();
-    		return redirect()->route('corporate.dashboard')->with('recruitdelete', '求人を削除しました。');
-    	}else{
-    		abort(404);
-    	}
+    	$recruit = Recruit::findOrFail($id);
+        Gate::authorize('update-recruit', $recruit);
+    	$recruit->delete();
+    	return redirect()->route('corporate.dashboard')->with('recruitdelete', '求人を削除しました。');
     }
 }

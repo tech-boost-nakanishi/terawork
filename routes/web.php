@@ -18,14 +18,14 @@ Route::get('/about', function(){
 });
 
 Route::get('/profile/show/{id}', 'ApplyController@profile');
-Route::get('/list/applies/{id}', 'ApplyController@applylist');
-Route::get('/list/views/{id}', 'ApplyController@viewlist');
-Route::get('/list/favorites/{id}', 'ApplyController@favoritelist');
 
 Route::group(['middleware' => 'auth:user'], function() {
 	Route::get('/dashboard', 'ApplyController@index');
 	Route::get('/profile/edit/{id}', 'ApplyController@profileedit');
 	Route::post('/profile/edit/{id}', 'ApplyController@profileupdate');
+	Route::get('/list/applies/{id}', 'ApplyController@applylist');
+	Route::get('/list/views/{id}', 'ApplyController@viewlist');
+	Route::get('/list/favorites/{id}', 'ApplyController@favoritelist');
 	Route::get('/logout', 'Auth\LoginController@logout');
 });
 
@@ -36,10 +36,10 @@ Route::group(['prefix' => 'corporate'], function() {
 		Route::get('/recruit/create', 'RecruitController@add');
 		Route::post('/recruit/create', 'RecruitController@create');
 		Route::get('/recruit/edit/{id}', 'RecruitController@edit')->name('recruit.edit');
-		Route::post('/recruit/edit', 'RecruitController@update');
+		Route::post('/recruit/edit/{id}', 'RecruitController@update');
 		Route::get('/profile/edit/{id}', 'RecruitController@profileedit');
 		Route::post('/profile/edit/{id}', 'RecruitController@profileupdate');
-		Route::get('/recruit/delete', 'RecruitController@delete');
+		Route::get('/recruit/delete/{id}', 'RecruitController@delete');
 		Route::get('/logout', 'CorporateController@logout');
 	});
 

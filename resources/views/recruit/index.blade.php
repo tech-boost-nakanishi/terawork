@@ -49,6 +49,17 @@
     <a href="{{ action('ApplyController@pre_apply', ['id' => $recruit->id]) }}" class="btn btn-lg btn-primary @if(!Auth::guard('user')->user()) disabled @endif">応募する</a>
 </div>
 
+<hr style="margin: 30px 0;">
+
+<div>
+    @foreach($recruit->languages as $reclang)
+        <h3 style="margin: 0;">{{ $reclang->name }}の新着</h3>
+        <hr style="border: 1px solid; margin: 0;">
+        @foreach($recruitdata->where('language_id', $reclang->id) as $recdata)
+            <p>{{ $recdata->pref_name }}</p>
+        @endforeach
+    @endforeach
+</div>
 @endsection
 
 @include('layouts.footer')
