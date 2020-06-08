@@ -55,9 +55,43 @@
     @foreach($recruit->languages as $reclang)
         <h3 style="margin: 0;">{{ $reclang->name }}の新着</h3>
         <hr style="border: 1px solid; margin: 0;">
-        @foreach($recruitdata->where('language_id', $reclang->id) as $recdata)
-            <p>{{ $recdata->pref_name }}</p>
-        @endforeach
+        <div class="card-columns">
+            @foreach($recruitdata->where('language_id', $reclang->id)->where('status', '募集中')->take(10) as $recdata)
+                @if($recdata->recruit_id != $recruit->id)
+                    <div class="card mt-3">
+                        <div class="card-header" style="width: 100%; background-color: #d8d8d8; color: #000; font-weight: bold;">
+                            {{ \Str::limit($recdata->title, 30) }}
+                        </div>
+                            <div class="card-body">
+                            <p class="card-text">
+                                {{ \Str::limit($recdata->body, 50) }}
+                            </p>
+                            <table class="table">
+                                <tr>
+                                    <th>都道府県</th>
+                                    <td>{{ $recdata->pref_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>月収</th>
+                                    <td>約{{ $recdata->monthly_income }}万円以上</td>
+                                </tr>
+                                <tr>
+                                    <th>言語</th>
+                                    <td style="width: 65%; word-wrap: break-word;">
+                                        @foreach($recruitdata as $reclang)
+                                            @if($recdata->recruit_id == $reclang->recruit_id)
+                                                <a href="{{ action('RecruitController@languagelist', ['language' => $reclang->name]) }}" style="margin-right: 5px;">{{ $reclang->name }}</a>
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <a class="btn" href="{{ action('RecruitController@show', ['id' => $recdata->id]) }}" style="display: block; margin: 10px auto; margin-top: -10px; width: 100px; background-color: #FFBF00;">詳細を見る</a>
+                    </div>
+                @endif
+            @endforeach
+        </div>
     @endforeach
 </div>
 @endsection

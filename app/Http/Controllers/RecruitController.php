@@ -54,7 +54,11 @@ class RecruitController extends Controller
 		    }
 		}
 
-        $recruitdata = \DB::table('recruits')->join('recruit_languages', 'recruits.id' , '=', 'recruit_languages.recruit_id')->get();
+        $recruitdata = \DB::table('recruits')
+                        ->join('recruit_languages', 'recruits.id' , '=', 'recruit_languages.recruit_id')
+                        ->join('languages', 'language_id', '=', 'languages.id')
+                        ->orderBy('recruits.created_at', 'DESC')
+                        ->get();
 
     	return view('recruit.index', ['recruit' => $recruit, 'recruitdata' => $recruitdata]);
     }
