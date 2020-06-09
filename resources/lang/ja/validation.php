@@ -170,6 +170,7 @@ return [
         'live_pref_name' => 'お住いの都道府県',
         'email' => 'メールアドレス',
         'phone' => '電話番号',
+        'new-password' => '新しいパスワード',
     ],
 
 ];
