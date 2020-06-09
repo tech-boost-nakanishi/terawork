@@ -9,7 +9,8 @@
 
 @auth('user')
 	@if($user->id == Auth::guard('user')->user()->id)
-		<a href="{{ action('ApplyController@profileedit', ['id' => $user->id]) }}" class="btn btn-primary float-right" style="width: 90px;">編集する</a>
+		<a href="{{ action('ApplyController@profileedit', ['id' => $user->id]) }}" class="btn btn-primary float-right" style="width: 90px; margin-left: 20px;">編集する</a>
+		<a href="{{ url('changepassword') }}" class="btn btn-info float-right" style="width: 130px;">パスワード変更</a>
 	@endif
 @endauth
 

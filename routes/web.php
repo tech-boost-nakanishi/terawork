@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth:user'], function() {
 	Route::get('/list/applies/{id}', 'ApplyController@applylist');
 	Route::get('/list/views/{id}', 'ApplyController@viewlist');
 	Route::get('/list/favorites/{id}', 'ApplyController@favoritelist');
+	Route::get('changepassword', 'HomeController@showChangePasswordForm');
+	Route::post('changepassword', 'HomeController@changePassword')->name('user.changepassword');
 	Route::get('/logout', 'Auth\LoginController@logout');
 });
 
@@ -40,6 +42,8 @@ Route::group(['prefix' => 'corporate'], function() {
 		Route::get('/profile/edit/{id}', 'RecruitController@profileedit');
 		Route::post('/profile/edit/{id}', 'RecruitController@profileupdate');
 		Route::get('/recruit/delete/{id}', 'RecruitController@delete');
+		Route::get('changepassword', 'HomeController@showChangePasswordForm');
+		Route::post('changepassword', 'HomeController@changePassword')->name('corporate.changepassword');
 		Route::get('/logout', 'CorporateController@logout');
 	});
 

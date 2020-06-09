@@ -40,5 +40,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('view',function($user, $id){
             return $user->id == $id;
         });
+
+        Gate::define('changepassword',function(){
+            return Auth::guard('corporate')->check();
+        });
     }
 }

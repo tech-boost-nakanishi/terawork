@@ -9,7 +9,8 @@
 
 @auth('corporate')
 	@if($corporate->id == Auth::guard('corporate')->user()->id)
-		<a href="{{ action('RecruitController@profileedit', ['id' => $corporate->id]) }}" class="btn btn-primary float-right" style="width: 90px;">編集する</a>
+		<a href="{{ action('RecruitController@profileedit', ['id' => $corporate->id]) }}" class="btn btn-primary float-right" style="width: 90px; margin-left: 20px;">編集する</a>
+		<a href="{{ url('corporate/changepassword') }}" class="btn btn-info float-right" style="width: 130px;">パスワード変更</a>
 	@endif
 @endauth
 
