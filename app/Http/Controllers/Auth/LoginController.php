@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
+use App\User;
+use Socialite;
 
 class LoginController extends Controller
 {
@@ -37,6 +39,35 @@ class LoginController extends Controller
 
         return $this->authenticated($request, $this->guard('user')->user())
                 ?: redirect('/dashboard')->with('login', 'ログインしました。');
+    }
+
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        $gUser = Socialite::driver('google')->stateless()->user();
+        
+        $user = User::where('email', $gUser->email)->first();
+        
+        if ($user == null) {
+            $user = $this->createUserByGoogle($gUser);
+        }
+        
+        Auth::login($user, true);
+        return redirect('/dashboard')->with('login', 'ログインしました。');
+    }
+
+    public function createUserByGoogle($gUser)
+    {
+        $user = User::create([
+            'name'     => $gUser->name,
+            'email'    => $gUser->email,
+            'password' => \Hash::make(uniqid()),
+        ]);
+        return $user;
     }
 
     public function logout()

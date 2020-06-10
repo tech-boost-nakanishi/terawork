@@ -17,6 +17,9 @@ Route::get('/about', function(){
 	return view('about');
 });
 
+Route::get('login/google', 'Auth\LoginController@redirectToGoogle');
+Route::get('login/google/callback', 'Auth\LoginController@handleGoogleCallback');
+
 Route::get('/profile/show/{id}', 'ApplyController@profile');
 
 Route::group(['middleware' => 'auth:user'], function() {

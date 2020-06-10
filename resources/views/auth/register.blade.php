@@ -71,6 +71,13 @@
                             </div>
                         </div>
                     </form>
+                    <div class="form-group row mt-2">
+                        <div class="col-md-8 offset-md-4">
+                            <a href="/login/google" class="btn btn-info" role="button">
+                                Googleで登録
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <p style="text-align: center;">アカウントをお持ちの方は<a href="{{ url('login') }}">こちら</a></p>
