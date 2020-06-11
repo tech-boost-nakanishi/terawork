@@ -76,6 +76,9 @@
                             <a href="/login/google" class="btn btn-info" role="button">
                                 Googleで登録
                             </a>
+                            <a href="/login/github" class="btn btn-secondary" role="button">
+                                Githubで登録
+                            </a>
                         </div>
                     </div>
                 </div>

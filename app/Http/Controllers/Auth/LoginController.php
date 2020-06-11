@@ -48,23 +48,42 @@ class LoginController extends Controller
 
     public function handleGoogleCallback()
     {
-        $gUser = Socialite::driver('google')->stateless()->user();
+        $pUser = Socialite::driver('google')->stateless()->user();
         
-        $user = User::where('email', $gUser->email)->first();
+        $user = User::where('email', $pUser->email)->first();
         
         if ($user == null) {
-            $user = $this->createUserByGoogle($gUser);
+            $user = $this->createUser($pUser);
         }
         
         Auth::login($user, true);
         return redirect('/dashboard')->with('login', 'ログインしました。');
     }
 
-    public function createUserByGoogle($gUser)
+    public function redirectToGithub()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    public function handleGithubCallback()
+    {
+        $pUser = Socialite::driver('github')->stateless()->user();
+        
+        $user = User::where('email', $pUser->email)->first();
+        
+        if ($user == null) {
+            $user = $this->createUser($pUser);
+        }
+        
+        Auth::login($user, true);
+        return redirect('/dashboard')->with('login', 'ログインしました。');
+    }
+
+    public function createUser($pUser)
     {
         $user = User::create([
-            'name'     => $gUser->name,
-            'email'    => $gUser->email,
+            'name'     => $pUser->name,
+            'email'    => $pUser->email,
             'password' => \Hash::make(uniqid()),
         ]);
         return $user;
