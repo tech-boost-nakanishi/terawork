@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Recruit;
+use App\Language;
 
 class RecruitSearchController extends Controller
 {
@@ -14,11 +15,10 @@ class RecruitSearchController extends Controller
     	$s_monthly_income = $request->monthly_income;
     	$s_language = $request->language;
     	$s_keyword = $request->keyword;
-
     	$PerPage = 12;
 
-    	$query = Recruit::query();
-    	$query->where('status', '募集中')->orderby('created_at', 'desc');
+    	$query = Recruit::orderby('created_at', 'desc');
+    	$query->where('status', '募集中');
 
     	if(!empty($s_pref_name)){
     		$query->where('pref_name', $s_pref_name);
@@ -33,11 +33,9 @@ class RecruitSearchController extends Controller
     	}
 
     	if(!empty($s_language)){
-    		foreach ($query as $key => $value) {
-    			if(!in_array($s_language, $value->languages()->get('name'))){
-    				unset($query[$key]);
-    			}
-    		}
+    		$language = Language::where('name', $s_language)->first();
+    		$ids = $language->recruits()->get()->pluck('id');
+    		$query->where('id', $ids);
     	}
 
         if($request->input('page', 1) * $PerPage - $PerPage + 1 < count($query->get())){
