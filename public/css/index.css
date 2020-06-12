@@ -4,12 +4,8 @@ body {
 	background-color: #fff;
 }
 
-nav {
+.nav {
 	height: 60px;
-}
-
-.navbar-toggler{
-	border-color: rgba(255,255,255,1);
 }
 
 .navbar-toggler .navbar-toggler-icon {
