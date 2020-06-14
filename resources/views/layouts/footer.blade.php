@@ -4,7 +4,7 @@
         <div class="col-md-3"></div>
         <ul>
             <li><a href="{{ url('/') }}">ホーム</a></li>
-            <li><a href="#">掲載企業一覧</a></li>
+            <li><a href="{{ action('RecruitController@corporate_list') }}">掲載企業一覧</a></li>
             <li><a href="{{ url('about') }}">{{ config('app.name') }}について</a></li>
         </ul>
 

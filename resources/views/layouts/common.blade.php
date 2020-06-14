@@ -25,7 +25,7 @@
         <div style="width: 100%; overflow: hidden;">
             @yield('header')
 
-            <div class="container" style="margin-top: 50px; min-height: calc(100vh - 60px - 200px - 100px);">
+            <div class="container" style="margin-top: 40px; min-height: calc(100vh - 60px - 200px - 70px);">
                 <div class="row">
                     @yield('sidebar')
 
