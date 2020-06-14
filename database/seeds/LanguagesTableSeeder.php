@@ -31,7 +31,7 @@ class LanguagesTableSeeder extends Seeder
 	          'name' => 'C言語',
 	        ],
 	        [
-	          'name' => 'C#',
+	          'name' => 'C++',
 	        ],
         ]);
     }
