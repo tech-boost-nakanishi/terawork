@@ -205,6 +205,12 @@ class RecruitController extends Controller
 		return redirect()->action('RecruitController@profileedit', ['id' => $id])->with('profileedited', 'プロフィールを更新しました。');
     }
 
+    public function corporate_list()
+    {
+        $corporates = Recruit::where('status', '募集中')->groupBy('corporate_id')->paginate(2,['corporate_id']);
+        return view('recruit.corporate_list', ['corporates' => $corporates]);
+    }
+
     public function delete($id, Request $request)
     {
     	$recruit = Recruit::findOrFail($id);
