@@ -53,12 +53,13 @@
 
 <div>
     @foreach($recruit->languages as $reclang)
-        <h3 style="margin: 0;">{{ $reclang->name }}の新着</h3>
+        <h3 style="margin: 0; margin-top: 20px;">{{ $reclang->name }}の新着</h3>
         <hr style="border: 1px solid; margin: 0;">
-        <div class="card-columns">
+        <div style="overflow-x: scroll;">
+        <div style="display: flex;">
             @foreach($recruitdata->where('language_id', $reclang->id)->where('status', '募集中')->take(10) as $recdata)
                 @if($recdata->recruit_id != $recruit->id)
-                    <div class="card mt-3">
+                    <div class="card mt-3" style="min-width: 300px; margin-right: 10px;">
                         <div class="card-header" style="width: 100%; background-color: #d8d8d8; color: #000; font-weight: bold;">
                             {{ \Str::limit($recdata->title, 30) }}
                         </div>
@@ -91,6 +92,8 @@
                     </div>
                 @endif
             @endforeach
+        <div style="clear: both;"></div>
+        </div>
         </div>
     @endforeach
 </div>

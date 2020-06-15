@@ -12,7 +12,7 @@
 
 <div class="card-columns">
     @foreach($recruits as $rec)
-        <div class="card mt-3">
+        <div class="card mt-3" style="min-width: 280px;">
             <div class="card-header" style="width: 100%; background-color: #d8d8d8; color: #000; font-weight: bold;">
                 {{ \Str::limit($rec->title, 30) }}
             </div>
