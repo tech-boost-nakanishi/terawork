@@ -8,6 +8,14 @@
     <div class="alert alert-info" role="alert" style="width: 100%;">{{ session('logout') }}</div>
 @endif
 
+@if(session('usercancel'))
+    <div class="alert alert-info" role="alert" style="width: 100%;">{{ session('usercancel') }}</div>
+@endif
+
+@if(session('corporatecancel'))
+    <div class="alert alert-info" role="alert" style="width: 100%;">{{ session('corporatecancel') }}</div>
+@endif
+
 <h2>求人一覧<span style="font-size: 18px; margin-left: 20px;">{{ $recruits->total() }}件</span><span class="d-none d-sm-block" style="font-size: 18px; font-weight: normal; display: block; text-align: right; margin-top: -20px;">{{ $from }}件〜{{ $to }}件を表示</span></h2>
 
 <div class="card-columns">

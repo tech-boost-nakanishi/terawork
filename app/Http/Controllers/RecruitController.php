@@ -207,7 +207,7 @@ class RecruitController extends Controller
 
     public function corporate_list()
     {
-        $corporates = Recruit::where('status', '募集中')->groupBy('corporate_id')->paginate(2,['corporate_id']);
+        $corporates = Recruit::where('status', '募集中')->groupBy('corporate_id')->paginate(50,['corporate_id']);
         return view('recruit.corporate_list', ['corporates' => $corporates]);
     }
 
@@ -217,5 +217,19 @@ class RecruitController extends Controller
         Gate::authorize('update-recruit', $recruit);
     	$recruit->delete();
     	return redirect()->route('corporate.dashboard')->with('recruitdelete', '求人を削除しました。');
+    }
+
+    public function pre_cancel($id)
+    {
+        $corporate_id = $id;
+        Gate::authorize('corporatecancel', $id, Auth::guard('corporate')->user()->id);
+        return view('recruit.cancel', ['corporate_id' => $corporate_id]);
+    }
+
+    public function cancel($id)
+    {
+        $corporate = Corporate::findOrFail($id);
+        $corporate->delete();
+        return redirect('/')->with('corporatecancel', 'ご利用ありがとうございました。');
     }
 }

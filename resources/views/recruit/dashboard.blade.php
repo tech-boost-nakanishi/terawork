@@ -63,5 +63,7 @@
     {{ $recruits->appends(request()->input())->links() }}
 </div>
 
+<a href="{{ action('RecruitController@pre_cancel', ['id' => Auth::guard('corporate')->user()->id]) }}" class="btn btn-danger float-right mt-4">退会する</a>
+
 @endsection
 @include('layouts.footer')

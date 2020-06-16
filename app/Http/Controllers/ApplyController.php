@@ -158,4 +158,18 @@ class ApplyController extends Controller
     		return redirect()->action('ApplyController@pre_apply', ['id' => $id])->with('applied', '応募済みです。');
     	}
     }
+
+    public function pre_cancel($id)
+    {
+        $user_id = $id;
+        Gate::authorize('usercancel', $id, Auth::guard('user')->user()->id);
+        return view('apply.cancel', ['user_id' => $user_id]);
+    }
+
+    public function cancel($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect('/')->with('usercancel', 'ご利用ありがとうございました。');
+    }
 }

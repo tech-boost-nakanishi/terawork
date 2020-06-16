@@ -40,5 +40,13 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('view',function($user, $id){
             return $user->id == $id;
         });
+
+        Gate::define('usercancel',function($user, $id){
+            return $user->id == $id;
+        });
+
+        Gate::define('corporatecancel',function($corporate, $id){
+            return $corporate->id == $id;
+        });
     }
 }

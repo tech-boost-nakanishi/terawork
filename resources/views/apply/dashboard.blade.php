@@ -76,5 +76,7 @@
 </div>
 <div style="clear: both;"></div>
 
+<a href="{{ action('ApplyController@pre_cancel', ['id' => Auth::guard('user')->user()->id]) }}" class="btn btn-danger float-right mt-4">退会する</a>
+
 @endsection
 @include('layouts.footer')

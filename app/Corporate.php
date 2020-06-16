@@ -54,4 +54,15 @@ class Corporate extends Authenticatable
     {
     	return $this->hasMany("App\Recruit");
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($corporate){
+            foreach ($corporate->recruits()->get() as $child) {
+                $child->delete();
+            }
+        });
+    }
 }

@@ -63,4 +63,23 @@ class User extends Authenticatable
     {
         return $this->hasMany("App\Favorite");
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($user){
+            foreach ($user->applies()->get() as $child) {
+                $child->delete();
+            }
+
+            foreach ($user->viewhistories()->get() as $child) {
+                $child->delete();
+            }
+
+            foreach ($user->favorites()->get() as $child) {
+                $child->delete();
+            }
+        });
+    }
 }
