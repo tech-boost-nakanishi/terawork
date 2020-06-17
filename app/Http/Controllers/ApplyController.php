@@ -169,6 +169,7 @@ class ApplyController extends Controller
     public function cancel($id)
     {
         $user = User::findOrFail($id);
+        Gate::authorize('usercancel', $id, Auth::guard('user')->user()->id);
         $user->delete();
         return redirect('/')->with('usercancel', 'ご利用ありがとうございました。');
     }
