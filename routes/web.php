@@ -25,6 +25,8 @@ Route::get('login/github/callback', 'Auth\LoginController@handleGithubCallback')
 
 Route::get('/profile/show/{id}', 'ApplyController@profile');
 
+Route::get('/register/emailcheck/{email}/{token}', 'Auth\RegisterController@maincheck');
+
 Route::group(['middleware' => 'auth:user'], function() {
 	Route::get('/dashboard', 'ApplyController@index');
 	Route::get('/profile/edit/{id}', 'ApplyController@profileedit');

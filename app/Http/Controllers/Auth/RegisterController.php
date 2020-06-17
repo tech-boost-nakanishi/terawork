@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegisterMail;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -29,12 +32,23 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+        $email_verify_token = Hash::make(str_random(40));
+        $email_verify_token = str_replace('/', '.', $email_verify_token);
+        $user = new User;
+        $user->name = $request->name;
+        $user->password = Hash::make($request->password);
+        $user->email = $request->email;
+        $user->email_verify_token = $email_verify_token;
+        $user->save();
 
-        $this->guard('user')->login($user);
+        $this->guard('user')->logout($user);
 
-        return $this->registered($request, $user)
-                        ?: redirect('/dashboard')->with('register', '登録ありがとうございます。');
+        Mail::to($user->email)
+        ->send(new RegisterMail(
+            $user = $user,
+        ));
+
+        return view('auth.register_emailcheck_success');
     }
 
     /**
@@ -82,5 +96,18 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function maincheck($email, $token)
+    {
+        $user = User::where('email', $email)->where('email_verify_token', $token)->first();
+        if($user !== null){
+            $user->email_verified_at = Carbon::now();
+            $user->save();
+            $this->guard('user')->login($user);
+            return redirect()->action('ApplyController@index')->with('register', '登録ありがとうございます。');
+        }else{
+            abort(404);
+        }
     }
 }

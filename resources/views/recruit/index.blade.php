@@ -57,8 +57,10 @@
         <hr style="border: 1px solid; margin: 0;">
         <div style="overflow-x: scroll;">
         <div style="display: flex;">
+            <?php $i=0; ?>
             @foreach($recruitdata->where('language_id', $reclang->id)->where('status', '募集中')->take(10) as $recdata)
                 @if($recdata->recruit_id != $recruit->id)
+                <?php $i++; ?>
                     <div class="card mt-3" style="min-width: 300px; margin-right: 10px;">
                         <div class="card-header" style="width: 100%; background-color: #d8d8d8; color: #000; font-weight: bold;">
                             {{ \Str::limit($recdata->title, 30) }}
@@ -93,6 +95,9 @@
                 @endif
             @endforeach
         <div style="clear: both;"></div>
+        @if($i == 0)
+            <p style="font-weight: bold; font-size: 16px;" class="mt-2">一致する求人はありません。</p>
+        @endif
         </div>
         </div>
     @endforeach
