@@ -229,6 +229,7 @@ class RecruitController extends Controller
     public function cancel($id)
     {
         $corporate = Corporate::findOrFail($id);
+        Gate::authorize('corporatecancel', $id, Auth::guard('corporate')->user()->id);
         $corporate->delete();
         return redirect('/')->with('corporatecancel', 'ご利用ありがとうございました。');
     }
