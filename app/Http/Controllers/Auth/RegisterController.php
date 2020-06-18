@@ -7,6 +7,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegisterMail;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -23,12 +28,35 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $email_verify_token = Hash::make(str_random(40));
+        $email_verify_token = str_replace('/', '.', $email_verify_token);
+        $user = new User;
+        $user->name = $request->name;
+        $user->password = Hash::make($request->password);
+        $user->email = $request->email;
+        $user->email_verify_token = $email_verify_token;
+        $user->save();
+
+        $this->guard('user')->logout($user);
+
+        Mail::to($user->email)
+        ->send(new RegisterMail(
+            $user = $user,
+        ));
+
+        return view('auth.register_emailcheck_success');
+    }
+
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -37,7 +65,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:user');
     }
 
     /**
@@ -49,7 +77,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'regex:/^[ぁ-んァ-ヶー一-龠]+$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -68,5 +96,18 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function maincheck($email, $token)
+    {
+        $user = User::where('email', $email)->where('email_verify_token', $token)->first();
+        if($user !== null){
+            $user->email_verified_at = Carbon::now();
+            $user->save();
+            $this->guard('user')->login($user);
+            return redirect()->action('ApplyController@index')->with('register', '登録ありがとうございます。');
+        }else{
+            abort(404);
+        }
     }
 }
