@@ -37,8 +37,13 @@ class LoginController extends Controller
 
         Auth::guard('corporate')->logout();
 
-        return $this->authenticated($request, $this->guard('user')->user())
+        if(Auth::guard('user')->user()->email_verified_at !== null){
+            return $this->authenticated($request, $this->guard('user')->user())
                 ?: redirect('/dashboard')->with('login', 'ログインしました。');
+        }else{
+            $this->guard('user')->logout($this->guard()->user());
+            return view('auth.register_emailcheck_success');
+        }
     }
 
     public function redirectToGoogle()
