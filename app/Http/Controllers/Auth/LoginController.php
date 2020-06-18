@@ -72,15 +72,20 @@ class LoginController extends Controller
 
     public function handleGithubCallback()
     {
-        $pUser = Socialite::driver('github')->stateless()->user();
-        
-        $user = User::where('email', $pUser->email)->first();
-        
+        $socialUser = Socialite::driver('github')->stateless()->user();
+        $user = User::where('email', $socialUser->getEmail())->first();
+
         if ($user == null) {
-            $user = $this->createUser($pUser);
+            $user = User::create([
+                'name' => $socialUser->getNickname(),
+                'email' => $socialUser->getEmail(),
+                'password' => \Hash::make(uniqid()),
+            ]);
+            Auth::login($user);
+            return redirect('/dashboard')->with('register', '登録ありがとうございます。');
         }
-        
-        Auth::login($user, true);
+
+        Auth::login($user);
         return redirect('/dashboard')->with('login', 'ログインしました。');
     }
 
