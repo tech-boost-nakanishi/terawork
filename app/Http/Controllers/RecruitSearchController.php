@@ -35,7 +35,9 @@ class RecruitSearchController extends Controller
     	if(!empty($s_language)){
     		$language = Language::where('name', $s_language)->first();
     		$ids = $language->recruits()->get()->pluck('id');
-    		$query->where('id', $ids);
+            if(!$ids->isEmpty()){
+                $query->where('id', $ids);
+            }
     	}
 
         if($request->input('page', 1) * $PerPage - $PerPage + 1 < count($query->get())){

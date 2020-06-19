@@ -20,8 +20,8 @@
                 <label>本当に退会されますか？</label>
             </div>
             <div class="modal-footer">
-                <a type="button" class="btn btn-default" data-dismiss="modal">閉じる</a>
-                <a type="button" class="btn btn-danger" href="{{ action('RecruitController@cancel', ['id' => $corporate_id]) }}">削除</a>
+                <a type="button" class="btn btn-default" data-dismiss="modal">いいえ</a>
+                <a type="button" class="btn btn-danger" href="{{ action('RecruitController@cancel', ['id' => $corporate_id]) }}">はい</a>
             </div>
         </div>
     </div>
