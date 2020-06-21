@@ -12,6 +12,51 @@ body {
 	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 
+.sidebar label {
+	width: 100%;
+	height: 50px;
+	border: 1px solid #ced4da;
+	border-radius: 0.25rem;
+	font-size: 18px;
+	color: #000;
+	font-weight: bold;
+	text-align: center;
+	line-height: 50px;
+}
+
+.sidebar label > i {
+	display: none;
+}
+
+.sidebar #searchbox {
+	display: none;
+}
+
+.sidebar ul {
+	display: block;
+	max-width: 130%;
+	margin-left: -40px;
+	margin-top: -10px;
+}
+
+.sidebar ul li {
+	list-style: none;
+	border: 1px solid #ced4da;
+}
+
+.sidebar .searchbox-item-title {
+	background-color: #ececec;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.sidebar .searchbox-item {
+	padding: 10px 5px;
+}
+
 .content {
 	padding-left: 20px;
 }
@@ -71,4 +116,24 @@ footer span {
 	display: block;
 	text-align: center;
 	padding: 20px 0;
+}
+
+
+@media screen and (max-width: 767px) {
+	.sidebar label > i {
+		display: inline-block;
+	}
+
+	.sidebar ul {
+		height: 0;
+		overflow: hidden;
+		transition: all 0.5s;
+		-webkit-transition: all 0.5s;
+		-moz-transition: all 0.5s;
+		-o-transition: all 0.5s;
+	}
+
+	#searchbox:checked ~ ul {
+		height: 500px;
+	}
 }
