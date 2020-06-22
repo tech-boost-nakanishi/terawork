@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CorporateRegisterMail;
+use Carbon\Carbon;
 use Auth;
 
 class CorporateRegisterController extends Controller
@@ -36,16 +39,24 @@ class CorporateRegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
+        $email_verify_token = Hash::make(str_random(40));
+        $email_verify_token = str_replace('/', '.', $email_verify_token);
         $corporate = new Corporate;
         $corporate->corporate_name = $request->corporate_name;
         $corporate->contact_name = $request->contact_name;
         $corporate->email = $request->email;
         $corporate->password = Hash::make($request->password);
+        $corporate->email_verify_token = $email_verify_token;
         $corporate->save();
 
-        Auth::guard('corporate')->login($corporate);
+        Auth::guard('corporate')->logout($corporate);
 
-        return redirect('/corporate/dashboard')->with('register', '登録ありがとうございます。');
+        Mail::to($corporate->email)
+        ->send(new CorporateRegisterMail(
+            $corporate = $corporate,
+        ));
+
+        return view('auth.register_emailcheck_success');
     }
 
     /**
@@ -95,5 +106,18 @@ class CorporateRegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function maincheck($email, $token)
+    {
+        $corporate = Corporate::where('email', $email)->where('email_verify_token', $token)->first();
+        if($corporate !== null){
+            $corporate->email_verified_at = Carbon::now();
+            $corporate->save();
+            Auth::guard('corporate')->login($corporate);
+            return redirect()->action('CorporateController@index')->with('register', '登録ありがとうございます。');
+        }else{
+            abort(404);
+        }
     }
 }

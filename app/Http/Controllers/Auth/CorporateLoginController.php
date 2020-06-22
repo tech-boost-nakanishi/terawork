@@ -30,8 +30,12 @@ class CorporateLoginController extends Controller
       // Attempt to log the user in
       if (Auth::guard('corporate')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
         // if successful, then redirect to their intended location
-
-        return redirect()->route('corporate.dashboard')->with('login', 'ログインしました。');
+      	if(Auth::guard('corporate')->user()->email_verified_at !== null){
+            return redirect()->route('corporate.dashboard')->with('login', 'ログインしました。');
+        }else{
+            Auth::guard('corporate')->logout();
+            return view('auth.register_emailcheck_success');
+        }
       }
       // if unsuccessful, then redirect back to the login with the form data
       $validator->errors()->add('email', trans('auth.failed'));
