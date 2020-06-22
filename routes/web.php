@@ -69,6 +69,7 @@ Route::group(['prefix' => 'corporate'], function() {
     Route::post('/login', 'Auth\CorporateLoginController@login')->name('corporate.login.submit');
     Route::get('/register', 'Auth\CorporateRegisterController@showRegistrationForm')->name('corporate.register');
     Route::post('/register', 'Auth\CorporateRegisterController@register')->name('corporate.register.submit');
+    Route::get('/register/emailcheck/{email}/{token}', 'Auth\CorporateRegisterController@maincheck');
 
     Route::get('/recruit/show/{id}', 'RecruitController@show');
     Route::get('/recruit/language/{language}', 'RecruitController@languagelist');
