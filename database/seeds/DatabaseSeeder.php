@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
             LanguagesTableSeeder::class,
             UsersTableSeeder::class,
             CorporatesTableSeeder::class,
+            RecruitsTableSeeder::class,
+            RecruitLanguagesTableSeeder::class,
         ]);
     }
 }

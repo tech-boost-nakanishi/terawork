@@ -18,22 +18,23 @@ class RecruitController extends Controller
 {
     public function top(Request $request)
     {
-        $PerPage = 12;
+        $PerPage = 6;
         $from = 0;
         $to = 0;
-    	$recruits = Recruit::where('status', '募集中')->orderby('created_at', 'desc')->paginate($PerPage);
+    	$recruit = Recruit::where('status', '募集中')->orderby('created_at', 'desc');
 
-        if($request->input('page', 1) * $PerPage - $PerPage + 1 < count($recruits)){
+        if($request->input('page', 1) * $PerPage - $PerPage + 1 < count($recruit->get())){
             $from = $request->input('page', 1) * $PerPage - $PerPage + 1;
         }else{
-            $from = count($recruits);
+            $from = count($recruit->get());
         }
 
-        if($from + $PerPage - 1 < count($recruits)){
+        if($from + $PerPage - 1 < count($recruit->get())){
             $to = $from + $PerPage - 1;
         }else{
-            $to = count($recruits);
+            $to = count($recruit->get());
         }
+        $recruits = $recruit->paginate($PerPage);
     	return view('top', ['recruits' => $recruits, 'from' => $from, 'to' => $to]);
     }
 
@@ -77,7 +78,7 @@ class RecruitController extends Controller
         $from = 0;
         $to = 0;
         if(count($recruit) > 0){
-            $PerPage = 12;   //1ページあたりの件数
+            $PerPage = 6;   //1ページあたりの件数
             $displayData = array_chunk($recruit, $PerPage);
             $currentPageNo = $request->input('page', 1);
 
