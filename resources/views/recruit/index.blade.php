@@ -42,7 +42,7 @@
 </table>
 
 <h4 style="font-weight: bold; margin-bottom: 10px;">本文</h4>
-<p style="font-size: 16px;">{{ $recruit->body }}</p>
+<p style="font-size: 16px; margin: 0;">{!! nl2br(e($recruit->body)) !!}</p>
 
 <div style="width: 320px; display: flex; justify-content: space-between; margin: 0 auto; margin-top: 50px;">
     <a href="{{ action('ApplyController@favorite', ['id' => $recruit->id]) }}" class="btn btn-info btn-lg @if(!Auth::guard('user')->user()) disabled @endif" style="color: #fff;">お気に入りに追加</a>

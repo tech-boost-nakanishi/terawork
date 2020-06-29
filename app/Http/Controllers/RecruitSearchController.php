@@ -15,7 +15,7 @@ class RecruitSearchController extends Controller
     	$s_monthly_income = $request->monthly_income;
     	$s_language = $request->language;
     	$s_keyword = $request->keyword;
-    	$PerPage = 12;
+    	$PerPage = 6;
 
     	$query = Recruit::orderby('created_at', 'desc');
     	$query->where('status', '募集中');
@@ -36,7 +36,7 @@ class RecruitSearchController extends Controller
     		$language = Language::where('name', $s_language)->first();
     		$ids = $language->recruits()->get()->pluck('id');
             if(!$ids->isEmpty()){
-                $query->where('id', $ids);
+                $query->whereIn('id', $ids);
             }
     	}
 
