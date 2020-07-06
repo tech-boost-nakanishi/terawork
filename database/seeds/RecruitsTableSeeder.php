@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class RecruitsTableSeeder extends Seeder
 {
@@ -23,6 +24,8 @@ class RecruitsTableSeeder extends Seeder
 	          			■休日
 	          			土日祝
 	          			",
+	          'created_at' => Carbon::now(),
+	          'updated_at' => Carbon::now(),
 	        ],
 	        [
 	          'corporate_id' => 2,
@@ -35,6 +38,8 @@ class RecruitsTableSeeder extends Seeder
 	          			■休日
 	          			土日
 	          			",
+	          'created_at' => Carbon::now(),
+	          'updated_at' => Carbon::now(),
 	        ],
 	        [
 	          'corporate_id' => 3,
@@ -47,6 +52,8 @@ class RecruitsTableSeeder extends Seeder
 	          			■休日
 	          			土日
 	          			",
+	          'created_at' => Carbon::now(),
+	          'updated_at' => Carbon::now(),
 	        ],
 	        [
 	          'corporate_id' => 4,
@@ -59,6 +66,8 @@ class RecruitsTableSeeder extends Seeder
 	          			■休日
 	          			土日
 	          			",
+	          'created_at' => Carbon::now(),
+	          'updated_at' => Carbon::now(),
 	        ],
 	        [
 	          'corporate_id' => 2,
@@ -71,6 +80,8 @@ class RecruitsTableSeeder extends Seeder
 	          			■休日
 	          			土日
 	          			",
+	          'created_at' => Carbon::now(),
+	          'updated_at' => Carbon::now(),
 	        ],
 	        [
 	          'corporate_id' => 3,
@@ -83,6 +94,8 @@ class RecruitsTableSeeder extends Seeder
 	          			■休日
 	          			土日
 	          			",
+	          'created_at' => Carbon::now(),
+	          'updated_at' => Carbon::now(),
 	        ],
 	        [
 	          'corporate_id' => 2,
@@ -95,6 +108,8 @@ class RecruitsTableSeeder extends Seeder
 	          			■休日
 	          			土日
 	          			",
+	          'created_at' => Carbon::now(),
+	          'updated_at' => Carbon::now(),
 	        ],
         ]);
     }
