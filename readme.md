@@ -16,6 +16,7 @@ https://terawork.herokuapp.com
 - PHP 7.4
 - Laravel 5.8
 - MySQL 8.0
+- Bootstrap
 
 ## 機能一覧
 
