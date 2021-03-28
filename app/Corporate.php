@@ -55,12 +55,30 @@ class Corporate extends Authenticatable
     	return $this->hasMany("App\Recruit");
     }
 
+    public function sendmessages()
+    {
+        return $this->hasMany("App\Message", "send_corporate_id");
+    }
+
+    public function recievemessages()
+    {
+        return $this->hasMany("App\Message", "recieve_corporate_id");
+    }
+
     public static function boot()
     {
         parent::boot();
 
         static::deleting(function($corporate){
             foreach ($corporate->recruits()->get() as $child) {
+                $child->delete();
+            }
+
+            foreach ($corporate->sendmessages()->get() as $child) {
+                $child->delete();
+            }
+
+            foreach ($corporate->recievemessages()->get() as $child) {
                 $child->delete();
             }
         });

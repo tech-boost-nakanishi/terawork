@@ -64,6 +64,16 @@ class User extends Authenticatable
         return $this->hasMany("App\Favorite");
     }
 
+    public function sendmessages()
+    {
+        return $this->hasMany("App\Message", "send_user_id");
+    }
+
+    public function recievemessages()
+    {
+        return $this->hasMany("App\Message", "recieve_user_id");
+    }
+
     public static function boot()
     {
         parent::boot();
@@ -78,6 +88,14 @@ class User extends Authenticatable
             }
 
             foreach ($user->favorites()->get() as $child) {
+                $child->delete();
+            }
+
+            foreach ($user->sendmessages()->get() as $child) {
+                $child->delete();
+            }
+
+            foreach ($user->recievemessages()->get() as $child) {
                 $child->delete();
             }
         });
