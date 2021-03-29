@@ -13,6 +13,7 @@ use Auth;
 use App\User;
 use App\Favorite;
 use App\Apply;
+use App\Message;
 
 class ApplyController extends Controller
 {
@@ -152,6 +153,13 @@ class ApplyController extends Controller
     			$corporate_name = $corporate->corporate_name,
     			$contact_name = $corporate->contact_name,
     		));
+
+            $message = new Message;
+            $message->recruit_id = $recruit->id;
+            $message->apply_id = $apply->id;
+            $message->recieve_corporate_id = $corporate->id;
+            $message->send_user_id = Auth::guard('user')->user()->id;
+            $message->body = Auth::guard('user')->user()->name . 'さんが応募しました。'
 
     		return redirect()->action('ApplyController@pre_apply', ['id' => $id])->with('applysuccess', '応募が完了しました。');
     	}else{
