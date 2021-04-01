@@ -86,6 +86,62 @@ body {
 	font-size: 20px;
 }
 
+.messagebox {
+	width: 90%;
+	border: 1px solid #000000;
+	padding: 5px;
+}
+
+.messagebox p {
+	margin: 0;
+}
+
+.send-messagebox {
+	float: right;
+}
+
+.recieve-messagebox {
+	float: left;
+}
+
+.messagebox-sender {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.messagebox-subject {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.messagebox-body {
+	padding: 10px;
+}
+
+.messagebox hr {
+	margin: 5px 0;
+}
+
+.messagebox-date {
+	margin-bottom: 30px;
+	display: block;
+	clear: both;
+}
+
+.send-messagebox-date {
+	float: right;
+}
+
+.recieve-messagebox-date {
+	float: left;
+}
+
+.messagebox:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
 footer {
 	margin-top: 30px;
 	padding-top: 20px;

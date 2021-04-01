@@ -154,14 +154,6 @@ class ApplyController extends Controller
     			$contact_name = $corporate->contact_name,
     		));
 
-            $message = new Message;
-            $message->recruit_id = $recruit->id;
-            $message->apply_id = $apply->id;
-            $message->recieve_corporate_id = $corporate->id;
-            $message->send_user_id = Auth::guard('user')->user()->id;
-            $message->subject = '求人応募';
-            $message->body = Auth::guard('user')->user()->name . 'さんが' . $recruit->title . 'に応募しました。'
-
     		return redirect()->action('ApplyController@pre_apply', ['id' => $id])->with('applysuccess', '応募が完了しました。');
     	}else{
     		return redirect()->action('ApplyController@pre_apply', ['id' => $id])->with('applied', '応募済みです。');

@@ -161,6 +161,7 @@ return [
         'password' => 'パスワード',
         'title' => 'タイトル',
         'body' => '本文',
+        'subject' => '件名',
         'languages' => '言語',
         'monthly_income' => '月収',
         'pref_name' => '都道府県',

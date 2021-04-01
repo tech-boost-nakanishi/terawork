@@ -17,10 +17,10 @@ class CreateMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('recruit_id');
             $table->integer('apply_id');
-            $table->integer('send_corporate_id');
-            $table->integer('recieve_corporate_id');
-            $table->integer('send_user_id');
-            $table->integer('recieve_user_id');
+            $table->integer('send_corporate_id')->nullable();
+            $table->integer('recieve_corporate_id')->nullable();
+            $table->integer('send_user_id')->nullable();
+            $table->integer('recieve_user_id')->nullable();
             $table->string('subject');
             $table->string('body');
             $table->integer('readed')->default(0);

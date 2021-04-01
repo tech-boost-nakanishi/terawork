@@ -18,7 +18,13 @@
 			<tr>
 				<td><a href="{{ action('RecruitController@profile', ['id' => $apply->recruit->corporate->id]) }}">{{ $apply->recruit->corporate->corporate_name }}</a></td>
 				<td><a href="{{ action('RecruitController@show', ['id' => $apply->recruit->id]) }}">{{ $apply->recruit->title }}</a></td>
-				<td>メッセージを見る</td>
+				<td>
+					@if(count($user->sendmessages->where('apply_id', $apply->id)) + count($user->recievemessages->where('apply_id', $apply->id)) > 0)
+						<a href="{{ action('MessageController@show', ['id' => $apply->id]) }}">
+							メッセージを見る
+						</a>
+					@endif
+				</td>
 			</tr>
 		@endforeach
 	</tbody>
