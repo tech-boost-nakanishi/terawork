@@ -66,6 +66,6 @@
 </form>
 
 
-<script src="{{ asset('js/message_scroll.js') }}" defer></script>
+<script src="{{ asset('js/message.js') }}" defer></script>
 @endsection
 @include('layouts.footer')
