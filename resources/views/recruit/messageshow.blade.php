@@ -5,12 +5,12 @@
 @include('layouts.sidebar')
 @section('content')
 
-<h2 style="margin-bottom: 20px;">{{ $apply->recruit->corporate->corporate_name }}さんとのメッセージ</h2>
+<h2 style="margin-bottom: 20px;">{{ $apply->user->name }}さんとのメッセージ</h2>
 <p style="font-size: 18px;"><strong>応募求人</strong>：<a href="{{ action('RecruitController@show', ['id' => $apply->recruit->id]) }}">{{ $apply->recruit->title }}</a></p>
 
 @if(count($messages) > 0)
 	@foreach($messages as $message)
-		@if(!is_null($message->send_user_id) && Auth::guard('user')->check())
+		@if(!is_null($message->send_corporate_id) && Auth::guard('corporate')->check())
 			<div class="send-messagebox messagebox" @if($loop->last)id="latest-message"@endif>
 				<div>
 					<p class="messagebox-sender">あなた</p>
@@ -27,7 +27,7 @@
 			<div class="recieve-messagebox messagebox" @if($loop->last)id="latest-message"@endif>
 				<div>
 					<p class="messagebox-sender">
-						{{ $apply->recruit->corporate->corporate_name }}
+						{{ $apply->user->name }}
 					</p>
 					<p class="messagebox-subject">{{ $message->subject }}</p>
 				</div>
