@@ -10,7 +10,7 @@
 
 @if(count($messages) > 0)
 	@foreach($messages as $message)
-		@if(!is_null($message->send_user_id))
+		@if(!is_null($message->send_user_id) || !is_null($message->send_corporate_id))
 			<div class="send-messagebox messagebox" @if($loop->last)id="latest-message"@endif>
 				<div>
 					<p class="messagebox-sender">あなた</p>
@@ -23,10 +23,16 @@
 			</div>
 			<span class="send-messagebox-date messagebox-date">{{ $message->created_at }}  @if($message->readed == 1)既読@endif</span>
 
-		@elseif(!is_null($message->recieve_corporate_id))
+		@elseif(!is_null($message->recieve_user_id) || !is_null($message->recieve_corporate_id))
 			<div class="recieve-messagebox messagebox" @if($loop->last)id="latest-message"@endif>
 				<div>
-					<p class="messagebox-sender">{{ $apply->recruit->corporate->corporate_name }}</p>
+					<p class="messagebox-sender">
+						@if(!is_null($message->recieve_user_id))
+							{{ $apply->user->name }}
+						@else
+							{{ $apply->recruit->corporate->corporate_name }}
+						@endif
+					</p>
 					<p class="messagebox-subject">{{ $message->subject }}</p>
 				</div>
 				<hr>
