@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Auth;
 use DateTime;
 use App\User;
@@ -22,6 +23,7 @@ class MessageController extends Controller
     public function usershow($id){
 		$apply = Apply::findOrFail($id);
 		$user = Auth::guard('user')->user();
+		Gate::authorize('usermessage', $apply);
 		$send = $user->sendmessages()->where('apply_id', $id)->get();
 		$recieve = $user->recievemessages()->where('apply_id', $id)->get();
 		$subject = (count($recieve) > 0) ? $recieve->last()->subject : null;
@@ -47,6 +49,7 @@ class MessageController extends Controller
     public function corporateshow($id){
     	$apply = Apply::findOrFail($id);
     	$corporate = Auth::guard('corporate')->user();
+    	Gate::authorize('corporatemessage', $apply->recruit()->first());
 		$send = $corporate->sendmessages()->where('apply_id', $id)->get();
 		$recieve = $corporate->recievemessages()->where('apply_id', $id)->get();
 		$subject = (count($recieve) > 0) ? $recieve->last()->subject : null;

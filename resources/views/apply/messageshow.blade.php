@@ -10,7 +10,7 @@
 
 @if(count($messages) > 0)
 	@foreach($messages as $message)
-		@if(!is_null($message->send_user_id) && Auth::guard('user')->check())
+		@if(!is_null($message->send_user_id))
 			<div class="send-messagebox messagebox" @if($loop->last)id="latest-message"@endif>
 				<div>
 					<p class="messagebox-sender">あなた</p>

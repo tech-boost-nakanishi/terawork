@@ -178,6 +178,7 @@ class RecruitController extends Controller
     public function appliedlist($id)
     {
         $recruit = Recruit::findOrFail($id);
+        Gate::authorize('corporatemessage', $recruit);
         $applies = $recruit->applies()->paginate(10);
         return view('recruit.appliedlist', ['applies' => $applies, 'recruit' => $recruit]);
     }
