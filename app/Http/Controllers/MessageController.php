@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ApplyReceiveMessage;
+use App\Mail\CorporateReceiveMessage;
 use Auth;
 use DateTime;
 use App\User;
@@ -72,34 +75,51 @@ class MessageController extends Controller
 		return view('recruit.messageshow', ['messages' => $messages, 'apply' => $apply, 'subject' => $subject]);
     }
 
-    public function create($id, Request $request){
+    public function usercreate($id, Request $request){
     	$this->validate($request, Message::$rules);
 
     	$apply = Apply::findOrFail($id);
     	$recruit = $apply->recruit()->first();
+        
+		$message = new Message;
+		$message->recruit_id = $recruit->id;
+		$message->apply_id = $id;
+		$message->send_user_id = Auth::guard('user')->user()->id;
+		$message->recieve_corporate_id = $recruit->corporate()->first()->id;
+		$message->subject = $request->subject;
+		$message->body = $request->body;
+		$message->save();
 
-    	if(Auth::guard('user')->check()){
-    		$message = new Message;
-    		$message->recruit_id = $recruit->id;
-    		$message->apply_id = $id;
-    		$message->send_user_id = Auth::guard('user')->user()->id;
-    		$message->recieve_corporate_id = $recruit->corporate()->first()->id;
-    		$message->subject = $request->subject;
-    		$message->body = $request->body;
-    		$message->save();
-    		return redirect()->action('MessageController@usershow', ['id' => $id]);
-    	}
+		Mail::to($recruit->corporate()->first()->email)->send(new CorporateReceiveMessage(
+			$corporate_name = $recruit->corporate()->first()->corporate_name,
+			$contact_name = $recruit->corporate()->first()->contact_name,
+			$username = $apply->user()->first()->name,
+			$apply_id = $id,
+		));
 
-    	if(Auth::guard('corporate')->check()){
-    		$message = new Message;
-    		$message->recruit_id = $recruit->id;
-    		$message->apply_id = $id;
-    		$message->send_corporate_id = Auth::guard('corporate')->user()->id;
-    		$message->recieve_user_id = $apply->user()->first()->id;
-    		$message->subject = $request->subject;
-    		$message->body = $request->body;
-    		$message->save();
-    		return redirect()->action('MessageController@corporateshow', ['id' => $id]);
-    	}
+		return redirect()->action('MessageController@usershow', ['id' => $id]);
+    }
+
+    public function corporatecreate($id, Request $request){
+        $this->validate($request, Message::$rules);
+
+        $apply = Apply::findOrFail($id);
+        $recruit = $apply->recruit()->first();
+
+        $message = new Message;
+        $message->recruit_id = $recruit->id;
+        $message->apply_id = $id;
+        $message->send_corporate_id = Auth::guard('corporate')->user()->id;
+        $message->recieve_user_id = $apply->user()->first()->id;
+        $message->subject = $request->subject;
+        $message->body = $request->body;
+        $message->save();
+
+        Mail::to($apply->user()->first()->email)->send(new ApplyReceiveMessage(
+            $name = $apply->user()->first()->name,
+            $apply_id = $id,
+        ));
+
+        return redirect()->action('MessageController@corporateshow', ['id' => $id]);
     }
 }

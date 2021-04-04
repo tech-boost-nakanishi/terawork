@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth:user'], function() {
 	Route::get('/list/favorites/{id}', 'ApplyController@favoritelist');
 	Route::get('/list/messages', 'MessageController@list');
 	Route::get('/list/messages/{id}', 'MessageController@usershow');
-	Route::post('/list/messages/{id}', 'MessageController@create');
+	Route::post('/list/messages/{id}', 'MessageController@usercreate');
 	Route::get('changepassword', 'HomeController@showChangePasswordForm');
 	Route::post('changepassword', 'HomeController@changePassword')->name('user.changepassword');
 	Route::get('/pre_cancel/{id}', 'ApplyController@pre_cancel');
@@ -57,7 +57,7 @@ Route::group(['prefix' => 'corporate'], function() {
 		Route::get('/recruit/delete/{id}', 'RecruitController@delete');
 		Route::get('/list/recruit/applies/{id}', 'RecruitController@appliedlist');
 		Route::get('/list/messages/{id}', 'MessageController@corporateshow');
-		Route::post('/list/messages/{id}', 'MessageController@create');
+		Route::post('/list/messages/{id}', 'MessageController@corporatecreate');
 		Route::get('changepassword', 'HomeController@showChangePasswordForm');
 		Route::post('changepassword', 'HomeController@changePassword')->name('corporate.changepassword');
 		Route::get('/pre_cancel/{id}', 'RecruitController@pre_cancel');

@@ -7,9 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use App\User;
-
-class ApplyConfirmMail extends Mailable
+class ApplyReceiveMessage extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -34,9 +32,9 @@ class ApplyConfirmMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.apply_confirm')
-                    ->text('emails.apply_confirm_plain')
-                    ->subject('応募が完了しました。')
+        return $this->view('emails.apply_receive_message')
+                    ->text('emails.apply_receive_message_plain')
+                    ->subject('企業からメッセージが届きました。')
                     ->with([
                         'name' => $this->name,
                         'apply_id' => $this->apply_id,

@@ -135,7 +135,7 @@ class ApplyController extends Controller
 
     		Mail::to($request->email)->send(new ApplyConfirmMail(
     			$name = Auth::guard('user')->user()->name,
-    			$corporate_email = $corporate->email,
+    			$apply_id = $apply->id,
     		));
 
     		Mail::to($corporate->email)->send(new ApplyMail(
@@ -152,6 +152,7 @@ class ApplyController extends Controller
     			$rectitle = $recruit->title,
     			$corporate_name = $corporate->corporate_name,
     			$contact_name = $corporate->contact_name,
+                $apply_id = $apply->id,
     		));
 
     		return redirect()->action('ApplyController@pre_apply', ['id' => $id])->with('applysuccess', '応募が完了しました。');

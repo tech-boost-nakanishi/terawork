@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<style type="text/css">
-		a {
-			text-decoration: none;
-		}
-	</style>
 </head>
 <body>
 	<h3>{{ $name }}様</h3>
 
 	<p>
 		いつもご利用ありがとうございます。<br>
-		応募が完了しましたのでお知らせいたします。<br>
-		募集企業からのメッセージをお待ちください。
+		企業からメッセージが届きました。<br>
 	</p>
 
 	<p>
-		この求人のメッセージはこちら<br>
+		企業からのメッセージはこちら<br>
 		<a href="{{ action('MessageController@usershow', ['id' => $apply_id]) }}">{{ action('MessageController@usershow', ['id' => $apply_id]) }}</a>
 	</p>
 

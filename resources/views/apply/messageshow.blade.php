@@ -44,7 +44,7 @@
 @endif
 
 <h3 style="clear: both;">メッセージを送信</h3>
-<form action="{{ action('MessageController@create', ['id' => $apply->id]) }}" method="post" enctype="multipart/form-data">
+<form action="{{ action('MessageController@usercreate', ['id' => $apply->id]) }}" method="post" enctype="multipart/form-data">
 	<div class="form-group row">
 		@if($errors->has('subject'))
 		　　<div class="alert alert-danger" role="alert" style="width: 100%;">{{ $errors->first('subject') }}</div>
