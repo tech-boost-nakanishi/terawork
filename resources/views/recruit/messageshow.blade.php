@@ -67,7 +67,11 @@
     <input type="submit" value="メッセージ送信" class="btn btn-primary" style="display: block; width: 140px; margin: 20px auto;">
 </form>
 
-
-<script src="{{ asset('js/message.js') }}" defer></script>
+<script type="text/javascript">
+	$(function(){
+		var position = $('#latest-message').offset().top;
+		$('html, body').animate({scrollTop:position}, 300);
+	});
+</script>
 @endsection
 @include('layouts.footer')

@@ -68,6 +68,12 @@
 </form>
 
 
-<script src="{{ asset('js/message.js') }}" defer></script>
+<!-- <script src="{{ asset('js/message.js') }}" defer></script> -->
+<script type="text/javascript">
+	$(function(){
+		var position = $('#latest-message').offset().top;
+		$('html, body').animate({scrollTop:position}, 300);
+	});
+</script>
 @endsection
 @include('layouts.footer')
