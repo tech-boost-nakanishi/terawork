@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth:user'], function() {
 	Route::get('/list/favorites/{id}', 'ApplyController@favoritelist');
 	Route::get('/list/messages', 'MessageController@list');
 	Route::get('/list/messages/{id}', 'MessageController@usershow');
+	Route::get('/list/messages/{id}/ajax', 'MessageController@getusermessage')->name('user.messageajax');
 	Route::post('/list/messages/{id}', 'MessageController@usercreate');
 	Route::get('changepassword', 'HomeController@showChangePasswordForm');
 	Route::post('changepassword', 'HomeController@changePassword')->name('user.changepassword');
@@ -57,6 +58,7 @@ Route::group(['prefix' => 'corporate'], function() {
 		Route::get('/recruit/delete/{id}', 'RecruitController@delete');
 		Route::get('/list/recruit/applies/{id}', 'RecruitController@appliedlist');
 		Route::get('/list/messages/{id}', 'MessageController@corporateshow');
+		Route::get('/list/messages/{id}/ajax', 'MessageController@getcorporatemessage')->name('corporate.messageajax');
 		Route::post('/list/messages/{id}', 'MessageController@corporatecreate');
 		Route::get('changepassword', 'HomeController@showChangePasswordForm');
 		Route::post('changepassword', 'HomeController@changePassword')->name('corporate.changepassword');

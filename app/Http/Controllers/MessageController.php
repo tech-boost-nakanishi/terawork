@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ApplyReceiveMessage;
 use App\Mail\CorporateReceiveMessage;
+use Illuminate\Support\Facades\Cookie;
 use Auth;
 use DateTime;
 use App\User;
@@ -35,6 +36,7 @@ class MessageController extends Controller
 			$rec->save();
 		}
 		$message = $send->merge($recieve)->toArray();
+		Cookie::queue('usermessagecount', count($message), 1);
 		
 		$sort = array();
 		foreach ($message as $value) {
@@ -49,6 +51,22 @@ class MessageController extends Controller
 		return view('apply.messageshow', ['messages' => $messages, 'apply' => $apply, 'subject' => $subject]);
     }
 
+    public function getusermessage($id){
+    	$apply = Apply::findOrFail($id);
+		$user = Auth::guard('user')->user();
+		Gate::authorize('usermessage', $apply);
+		$send = $user->sendmessages()->where('apply_id', $id)->get();
+		$recieve = $user->recievemessages()->where('apply_id', $id)->get();
+		$message = $send->merge($recieve)->toArray();
+		if(Cookie::get('usermessagecount') < count($message)){
+			$json = ['success' => true];
+		}else{
+			$json = ['success' => false];
+		}
+		Cookie::queue('usermessagecount', count($message), 1);
+		return response()->json($json);
+    }
+
     public function corporateshow($id){
     	$apply = Apply::findOrFail($id);
     	$corporate = Auth::guard('corporate')->user();
@@ -61,6 +79,7 @@ class MessageController extends Controller
 			$rec->save();
 		}
 		$message = $send->merge($recieve)->toArray();
+		Cookie::queue('corporatemessagecount', count($message), 1);
 		
 		$sort = array();
 		foreach ($message as $value) {
@@ -73,6 +92,22 @@ class MessageController extends Controller
 			$value->created_at = $date->format('Y/n/j H:i');
 		}
 		return view('recruit.messageshow', ['messages' => $messages, 'apply' => $apply, 'subject' => $subject]);
+    }
+
+    public function getcorporatemessage($id){
+    	$apply = Apply::findOrFail($id);
+    	$corporate = Auth::guard('corporate')->user();
+    	Gate::authorize('corporatemessage', $apply->recruit()->first());
+		$send = $corporate->sendmessages()->where('apply_id', $id)->get();
+		$recieve = $corporate->recievemessages()->where('apply_id', $id)->get();
+		$message = $send->merge($recieve)->toArray();
+		if(Cookie::get('corporatemessagecount') < count($message)){
+			$json = ['success' => true];
+		}else{
+			$json = ['success' => false];
+		}
+		Cookie::queue('corporatemessagecount', count($message), 1);
+		return response()->json($json);
     }
 
     public function usercreate($id, Request $request){

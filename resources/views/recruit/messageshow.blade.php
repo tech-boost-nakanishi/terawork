@@ -51,7 +51,7 @@
 		@endif
         <label class="col-md-12" for="subject">件名</label>
         <div class="col-md-12">
-            <input type="text" class="form-control" name="subject" value="@if(!is_null($subject))Re:@endif{{ $subject }}">
+            <input type="text" id="subject" class="form-control" name="subject" value="@if(!is_null($subject))Re:@endif{{ $subject }}">
         </div>
 	</div>
 	<div class="form-group row">
@@ -60,7 +60,7 @@
 		@endif
         <label class="col-md-12" for="body">本文</label>
         <div class="col-md-12">
-            <textarea class="form-control" name="body" rows="5">{{ old('body') }}</textarea>
+            <textarea id="body" class="form-control" name="body" rows="5">{{ old('body') }}</textarea>
         </div>
 	</div>
 	{{ csrf_field() }}
@@ -71,7 +71,36 @@
 	$(function(){
 		var position = $('#latest-message').offset().top;
 		$('html, body').animate({scrollTop:position}, 300);
+
+		if (window.sessionStorage.getItem("corporatemessagesubject")) {
+			$('#subject').val(window.sessionStorage.getItem("corporatemessagesubject"));
+		}
+
+		if (window.sessionStorage.getItem("corporatemessagebody")) {
+			$('#body').val(window.sessionStorage.getItem("corporatemessagebody"));
+		}
+
+		get_data();
 	});
+
+	function get_data() {
+	    $.ajax({
+	        url: "{{ route('corporate.messageajax', ['id' => $apply->id]) }}",
+	        dataType: "json",
+	        success: data => {
+	            if(data.success){
+	            	window.sessionStorage.setItem('corporatemessagesubject', $('#subject').val());
+	            	window.sessionStorage.setItem('corporatemessagebody', $('#body').val());
+					window.location.reload();
+	            }
+	        },
+	        error: () => {
+	            console.log("error");
+	        }
+	    });
+
+	    setTimeout("get_data()", 8000);
+	}
 </script>
 @endsection
 @include('layouts.footer')

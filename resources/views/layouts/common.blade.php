@@ -24,6 +24,7 @@
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     </head>
     <body>
+        <div id="app"></div>
         <div style="width: 100%; overflow: hidden;">
             @yield('header')
 

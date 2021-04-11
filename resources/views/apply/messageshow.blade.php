@@ -51,7 +51,7 @@
 		@endif
         <label class="col-md-12" for="subject">件名</label>
         <div class="col-md-12">
-            <input type="text" class="form-control" name="subject" value="@if(!is_null($subject))Re:@endif{{ $subject }}">
+            <input type="text" id="subject" class="form-control" name="subject" value="@if(!is_null($subject))Re:@endif{{ $subject }}">
         </div>
 	</div>
 	<div class="form-group row">
@@ -60,20 +60,47 @@
 		@endif
         <label class="col-md-12" for="body">本文</label>
         <div class="col-md-12">
-            <textarea class="form-control" name="body" rows="5">{{ old('body') }}</textarea>
+            <textarea id="body" class="form-control" name="body" rows="5">{{ old('body') }}</textarea>
         </div>
 	</div>
 	{{ csrf_field() }}
     <input type="submit" value="メッセージ送信" class="btn btn-primary" style="display: block; width: 140px; margin: 20px auto;">
 </form>
 
-
-<!-- <script src="{{ asset('js/message.js') }}" defer></script> -->
 <script type="text/javascript">
 	$(function(){
 		var position = $('#latest-message').offset().top;
 		$('html, body').animate({scrollTop:position}, 300);
+
+		if (window.sessionStorage.getItem("usermessagesubject")) {
+			$('#subject').val(window.sessionStorage.getItem("usermessagesubject"));
+		}
+
+		if (window.sessionStorage.getItem("usermessagebody")) {
+			$('#body').val(window.sessionStorage.getItem("usermessagebody"));
+		}
+
+		get_data();
 	});
+
+	function get_data() {
+	    $.ajax({
+	        url: "{{ route('user.messageajax', ['id' => $apply->id]) }}",
+	        dataType: "json",
+	        success: data => {
+	            if(data.success){
+	            	window.sessionStorage.setItem('usermessagesubject', $('#subject').val());
+	            	window.sessionStorage.setItem('usermessagebody', $('#body').val());
+					window.location.reload();
+	            }
+	        },
+	        error: () => {
+	            console.log("error");
+	        }
+	    });
+
+	    setTimeout("get_data()", 8000);
+	}
 </script>
 @endsection
 @include('layouts.footer')
