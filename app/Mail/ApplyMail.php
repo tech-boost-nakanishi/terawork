@@ -24,13 +24,14 @@ class ApplyMail extends Mailable
     protected $rectitle;
     protected $corporate_name;
     protected $contact_name;
+    protected $apply_id;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($username, $user_id, $phonetic, $birth_year, $birth_month, $birth_day, $age, $live_pref_name, $email, $phone, $rectitle, $corporate_name, $contact_name)
+    public function __construct($username, $user_id, $phonetic, $birth_year, $birth_month, $birth_day, $age, $live_pref_name, $email, $phone, $rectitle, $corporate_name, $contact_name, $apply_id)
     {
         $this->username = $username;
         $this->user_id = $user_id;
@@ -45,6 +46,7 @@ class ApplyMail extends Mailable
         $this->rectitle = $rectitle;
         $this->corporate_name = $corporate_name;
         $this->contact_name = $contact_name;
+        $this->apply_id = $apply_id;
     }
 
     /**
@@ -71,6 +73,7 @@ class ApplyMail extends Mailable
                         'rectitle' => $this->rectitle,
                         'corporate_name' => $this->corporate_name,
                         'contact_name' => $this->contact_name,
+                        'apply_id' => $this->apply_id,
                       ]);
     }
 }

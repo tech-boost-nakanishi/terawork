@@ -48,5 +48,13 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('corporatecancel',function($corporate, $id){
             return $corporate->id == $id;
         });
+
+        Gate::define('usermessage',function($user, $apply){
+            return $user->id == $apply->user_id;
+        });
+
+        Gate::define('corporatemessage',function($corporate, $recruit){
+            return $corporate->id == $recruit->corporate_id;
+        });
     }
 }

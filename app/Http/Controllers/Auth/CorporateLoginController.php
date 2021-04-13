@@ -11,7 +11,7 @@ class CorporateLoginController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('guest:corporate')->except('logout');
+        $this->middleware('guest:corporate')->except('logout');
     }
 
     public function showLoginForm()

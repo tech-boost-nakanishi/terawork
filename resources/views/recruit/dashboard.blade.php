@@ -18,12 +18,13 @@
 
 <h2>掲載者マイページ</h2>
 
-<table class="table table-bordered" style="margin-top: 20px;">
+<h5 style="font-weight: bold; margin-top: 20px;">投稿求人一覧</h5>
+<table class="table table-bordered">
     <thead class="thead-dark">
         <th width="20%">日時</th>
         <th width="35%">タイトル</th>
         <th width="13%">ステータス</th>
-        <th width="12%">応募人数</th>
+        <th width="12%">応募者</th>
         <th width="20%">操作</th>
     </thead>
     <tbody>
@@ -32,7 +33,9 @@
                 <td>{{ $rec->created_at->format('Y年m月d日 H:i') }}</td>
                 <td><a href="{{ action('RecruitController@show', ['id' => $rec->id]) }}">{{ $rec->title }}</a></td>
                 <td>{{ $rec->status }}</td>
-                <td>{{ count($rec->applies) }}人</td>
+                <td>
+                    <a href="{{ action('RecruitController@appliedlist', ['id' => $rec->id]) }}">一覧({{ count($rec->applies) }})</a>
+                </td>
                 <td>
                     <a href="{{ route('recruit.edit', ['id' => $rec->id]) }}" class="btn btn-info">編集</a>
                     <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ $rec->id }}">削除</a>

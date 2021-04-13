@@ -22,6 +22,16 @@ class LoginController extends Controller
     |
     */
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest:user')->except('logout');
+    }
+
     use AuthenticatesUsers;
 
     public function showLoginForm()
@@ -59,6 +69,8 @@ class LoginController extends Controller
         
         if ($user == null) {
             $user = $this->createUser($pUser);
+            Auth::login($user);
+            return redirect('/dashboard')->with('register', '登録ありがとうございます。');
         }
         
         Auth::login($user, true);
@@ -111,14 +123,4 @@ class LoginController extends Controller
      * @var string
      */
     //protected $redirectTo = '/';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest:user')->except('logout');
-    }
 }

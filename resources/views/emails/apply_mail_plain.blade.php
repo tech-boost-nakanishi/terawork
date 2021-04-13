@@ -19,6 +19,7 @@
 {{ $username }}さんのプロフィール
 {{ action('ApplyController@profile', ['id' => $user_id]) }}
 
-これより直接メールか電話にて、応募者と連絡お願いします。
+{{ $username }}さんとのメッセージはこちら
+{{ action('MessageController@corporateshow', ['id' => $apply_id]) }}
 
 {{ url('/') }}
