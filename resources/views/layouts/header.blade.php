@@ -45,6 +45,9 @@
                         <a class="dropdown-item" href="{{ action('ApplyController@index') }}">
                             マイページ
                         </a>
+                        <a class="dropdown-item" href="{{ action('MessageController@list') }}">
+                            メッセージ管理
+                        </a>
                         <a class="dropdown-item" href="{{ action('ApplyController@profile', ['id' => Auth::guard('user')->user()->id]) }}">
                             プロフィール
                         </a>

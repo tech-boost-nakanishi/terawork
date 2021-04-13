@@ -175,6 +175,14 @@ class RecruitController extends Controller
     	return redirect()->action('RecruitController@edit', ['id' => $id])->with('recruitupdated', '求人を更新しました。');
     }
 
+    public function appliedlist($id)
+    {
+        $recruit = Recruit::findOrFail($id);
+        Gate::authorize('corporatemessage', $recruit);
+        $applies = $recruit->applies()->paginate(10);
+        return view('recruit.appliedlist', ['applies' => $applies, 'recruit' => $recruit]);
+    }
+
     public function profile($id)
     {
     	$corporate = Corporate::findOrFail($id);
